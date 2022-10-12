@@ -5,13 +5,24 @@ type TileCompProp = {
     tile: Tile
 };
 
+function getTileColor(value: number): string {
+    switch (value) {
+        case 0:
+            return "bg-gray-600";
+        case 2:
+            return "bg-amber-400";
+        default:
+            return "bg-stone-900";
+    }
+}
+
 export class TileComp extends Component<TileCompProp, {}> {
 
     render() {
         return <div
             key={this.props.tile._yPos.toString() + ',' + this.props.tile._xPos.toString()}
-            className='flex justify-center items-center w-20 h-20 lg:w-24 lg:h-24 text-white
-            sm:text-2xl lg:text-6xl font-semibold border-solid border-8 border-gray-300 rounded'>
+            className={`flex justify-center text-2xl w-24 h-24 items-center font-bold text-gray-50 border-solid rounded-lg 
+                ${getTileColor(this.props.tile._value)} rounded-lg`}>
             {this.props.tile._value}
         </div>;
     }

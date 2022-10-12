@@ -29,7 +29,7 @@ export class BoardComp extends Component<BoardProps, BoardCompState> {
         })
 
         // TODO: dynamic amount of cols
-        return <div className='grid grid-cols-4 border-8 border-gray-700 bg-gray-200 rounded'>
+        return <div className='flex justify-start items-center gap-2 grid grid-cols-4 grid-rows-4 aspect-square p-2 bg-stone-700 rounded-lg'>
             {cells}
         </div>
     }

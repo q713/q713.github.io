@@ -22,17 +22,27 @@ export class GameComp extends Component<{}, GameCompState> {
     }
 
     render() {
-        return <div className='grid grid-cols-2 gap-x-0 gap-y-4 justify-evenly '>
-
-            <div className='col-span-2 justify-start'>
-                <div className='font-bold text-4xl'>2048</div>
-
-                <div className='text-2xl'>Points: {this.state.points}</div>
+        return <div className="max-w-lg mx-auto px-8 flex flex-col min-h-screen">
+            <div className="flex py-8">
+                <div className="px-2 py-2 font-bold text-4xl rounded-lg">
+                    2048
+                </div>
             </div>
 
-            <div className='flex col-span-2 justify-center'>
+            <div className="flex mb-4">
+                <div
+                    className="ml-auto mr-4 relative px-3 py-1 rounded-lg text-center">
+                    <div className="text-xs font-bold uppercase">Points</div>
+                    <div className="font-bold">{this.state.points}</div>
+
+                </div>
+            </div>
+
+            <div className="p-4 rounded-lg mb-4 text-xl relative overflow-hidden ">
                 <BoardComp board={this.state.game.board}/>
             </div>
+
+            {/* TODO: add actions for steering the game */}
         </div>
     }
 }
