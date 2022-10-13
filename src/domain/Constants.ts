@@ -16,13 +16,14 @@ export enum MoveDirection {
     LEFT,
     RIGHT
 }
-/*
-enum GameState {
+
+export enum GameState {
     GAME_RUNNING,
     GAME_PAUSED,
-    GAME_STOPPED,
+    GAME_READY,
     GAME_OVER,
-    GAME_WON
+    GAME_WON,
+    GAME_STOPPED
 }
-*/
+
 

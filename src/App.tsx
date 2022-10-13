@@ -1,29 +1,24 @@
 import './App.css';
 import {GameComp} from './components/GameComp';
 import {Header} from "./components/Header";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {About} from "./components/About";
-import {Projects} from "./components/Projects";
+import {Navigate, Route, Routes, useLocation} from "react-router-dom";
+import {Home} from "./components/Home";
 
 function App() {
-  return (
-    <div className="App">
-        <BrowserRouter>
+    let location = useLocation();
+    return (
+        <div className="App">
             <Header/>
-
-            {/* TODO: error component */}
             <Routes>
-                <Route path="/"
-                       element={<About/>}
-                />
-                <Route path="projects"
-                       element={<Projects/>}
-                />
+                <Route path="/" element={<Home/>}/>
+                <Route path="/2048" element={<GameComp humanPlayer={
+                    location.state === null ? true : (typeof location.state.humanPlayer === 'boolean'
+                        ? location.state.humanPlayer : true)
+                }/>}/>
+                <Route path="*" element={<Navigate to="/" replace/>}/>
             </Routes>
-
-        </BrowserRouter>
-    </div>
-  );
+        </div>
+    );
 }
 
 export default App;

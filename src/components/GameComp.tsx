@@ -1,38 +1,47 @@
 import {Component, Fragment} from "react";
 import {Game} from "../domain/Game";
 import {BoardComp} from "./BoardComp";
-import {KeyBoardEventCodes, MoveDirection} from "../domain/Constants";
+import {GameState, KeyBoardEventCodes, MoveDirection} from "../domain/Constants";
 import {Board} from "../domain/Board";
-import {Transition, Dialog} from "@headlessui/react";
+import {Dialog, Transition} from "@headlessui/react";
+
+type GameProps = {
+    humanPlayer: boolean
+};
 
 type GameCompState = {
     game: Game,
     board: Board,
-    points: number
-    showGameOver: boolean,
-    showGameWon: boolean,
+    points: number,
+    gameState: GameState
 };
 
-export class GameComp extends Component<{}, GameCompState> {
+export class GameComp extends Component<GameProps, GameCompState> {
 
     //readonly state: GameCompState;
-    constructor(props: any) {
+    constructor(props: GameProps) {
         super(props);
-        let g = Game.createHumanGame();
+        let g = props.humanPlayer ? Game.createHumanGame() : Game.createAiGame();
         g.initGame();
         this.state = {
             game: g,
             board: g.board,
             points: g.points,
-            showGameOver: false,
-            showGameWon: false
+            gameState: GameState.GAME_READY
         }
+    }
+
+    private closeGameOver() {
+        this.setState({
+            ...this.state,
+            gameState: GameState.GAME_STOPPED
+        })
     }
 
     private closeGameWon() {
         this.setState({
             ...this.state,
-            showGameOver: false
+            gameState: GameState.GAME_RUNNING
         });
     }
 
@@ -45,20 +54,31 @@ export class GameComp extends Component<{}, GameCompState> {
     private updateState(g: Game) {
         let p = g.points;
         let b = g.board;
-        console.log(b);
         let isGameOver = g.isGameOver();
         let isGameWon = g.isGameWon();
+
+        let state: GameState | undefined = undefined;
+        if (isGameOver) {
+            state = GameState.GAME_OVER;
+        } else if (isGameWon) {
+            state = GameState.GAME_WON;
+        } else {
+            state = GameState.GAME_RUNNING;
+        }
+
         this.setState({
             ...this.state,
             game: g,
             board: b,
             points: p,
-            showGameOver: isGameOver,
-            showGameWon: isGameWon
+            gameState: state
         });
     }
 
     private handleKeyPress(event: KeyboardEvent) {
+        if (this.state.gameState == GameState.GAME_STOPPED || this.state.gameState == GameState.GAME_OVER)
+            return;
+
         let direction: MoveDirection | undefined = undefined;
         switch (event.code) {
             case KeyBoardEventCodes.KEY_ARROW_DOWN:
@@ -88,7 +108,8 @@ export class GameComp extends Component<{}, GameCompState> {
     }
 
     componentDidMount() {
-        window.addEventListener("keydown", this.handleKeyPress.bind(this));
+        if (this.state.gameState == GameState.GAME_READY && this.state.game.humanPlayer)
+            window.addEventListener("keydown", this.handleKeyPress.bind(this));
     }
 
     componentWillUnmount() {
@@ -122,7 +143,7 @@ export class GameComp extends Component<{}, GameCompState> {
                 </button>
             </div>
 
-            <Transition appear show={this.state.showGameWon} as={Fragment}>
+            <Transition appear show={this.state.gameState == GameState.GAME_WON} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={this.closeGameWon.bind(this)}>
                     <div className="fixed inset-0 overflow-y-auto">
                         <div className="flex min-h-full items-center justify-center p-4 text-center">

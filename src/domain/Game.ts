@@ -42,6 +42,10 @@ export class Game {
         return this._board;
     }
 
+    get humanPlayer(): boolean {
+        return this._humanPlayer;
+    }
+
     public initGame() {
         this._board.initRandom();
     }

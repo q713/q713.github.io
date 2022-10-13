@@ -83,6 +83,7 @@ export class Board {
         this.addRandomPiece();
     }
 
+    // TODO: fix bug
     public isMovePossible(): boolean {
         let freePositions = this.getFreePositions();
         if (freePositions.length > 0)
@@ -112,6 +113,7 @@ export class Board {
         return false
     }
 
+    // TODO: fix bug
     private mergeLeft(toMerge: Array<Tile>, toLeft: boolean): [boolean, number] {
         let colOrRow = !toLeft ? toMerge.reverse() : toMerge;
 

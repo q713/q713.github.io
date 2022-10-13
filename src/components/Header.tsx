@@ -14,13 +14,7 @@ export const Header = (): JSX.Element => {
                         <li>
                             <NavLink to="/" className={({isActive, isPending}) => { return `block py-2 pr-4 pl-3 text-white rounded md:bg-transparent
                                     text-stone-600 md:p-0 ${isActive ? "active" : ""}`}} >
-                                About
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="projects" className="block py-2 pr-4 pl-3 text-white rounded md:bg-transparent
-                                    text-stone-600 md:p-0">
-                                Projects
+                                Home
                             </NavLink>
                         </li>
                     </ul>
