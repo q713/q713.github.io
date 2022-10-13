@@ -1,16 +1,15 @@
-/*
-const KEY_ARROW_DOWN = "ArrowDown"
-const KEY_S = "S"
 
-const KEY_ARROW_LEFT = "ArrowLeft"
-const KEY_A = "A"
+export enum KeyBoardEventCodes {
+    KEY_ARROW_DOWN = "ArrowDown",
+    KEY_S = "KeyS",
+    KEY_ARROW_LEFT = "ArrowLeft",
+    KEY_A = "KeyA",
+    KEY_ARROW_RIGHT = "ArrowRight",
+    KEY_D = "KeyD",
+    KEY_ARROW_UP = "ArrowUp",
+    KEY_W = "KeyW"
+}
 
-const KEY_ARROW_RIGHT = "ArrowRight"
-const KEY_D = "D"
-
-const KEY_ARROW_UP = "ArrowUp"
-const KEY_W = "W"
-*/
 export enum MoveDirection {
     UP,
     DOWN,
@@ -26,3 +25,4 @@ enum GameState {
     GAME_WON
 }
 */
+

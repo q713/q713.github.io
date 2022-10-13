@@ -24,7 +24,7 @@ export class BoardComp extends Component<BoardProps, BoardCompState> {
     render() {
         const cells = this.state.board.board.flatMap((row) => {
             return row.flatMap((t) => {
-                return <TileComp tile={t}/>
+                return <TileComp key={t._yPos.toString() + ',' + t._xPos.toString()} tile={t}/>
             })
         })
 

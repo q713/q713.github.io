@@ -20,7 +20,6 @@ export class TileComp extends Component<TileCompProp, {}> {
 
     render() {
         return <div
-            key={this.props.tile._yPos.toString() + ',' + this.props.tile._xPos.toString()}
             className={`flex justify-center text-2xl w-24 h-24 items-center font-bold text-gray-50 border-solid rounded-lg 
                 ${getTileColor(this.props.tile._value)} rounded-lg`}>
             {this.props.tile._value}
