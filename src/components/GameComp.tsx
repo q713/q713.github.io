@@ -1,13 +1,15 @@
-import {Component} from "react";
+import {Component, Fragment} from "react";
 import {Game} from "../domain/Game";
 import {BoardComp} from "./BoardComp";
 import {KeyBoardEventCodes, MoveDirection} from "../domain/Constants";
 import {Board} from "../domain/Board";
+import {Transition, Dialog} from "@headlessui/react";
 
 type GameCompState = {
     game: Game,
     board: Board,
     points: number
+    showGameOver: boolean,
 };
 
 export class GameComp extends Component<{}, GameCompState> {
@@ -20,17 +22,35 @@ export class GameComp extends Component<{}, GameCompState> {
         this.state = {
             game: g,
             board: g.board,
-            points: g.points
+            points: g.points,
+            showGameOver: false
         }
     }
 
-    private updateBoardAndPoints() {
-        let p = this.state.game.points;
-        let b = this.state.game.board;
+    private closeGameOver() {
         this.setState({
             ...this.state,
+            showGameOver: false
+        });
+    }
+
+    private startNewGame() {
+        let g = Game.createHumanGame();
+        g.initGame();
+        this.updateState(g);
+    }
+
+    private updateState(g: Game) {
+        let p = g.points;
+        let b = g.board;
+        console.log(b);
+        let isGameOver = g.isGameOver();
+        this.setState({
+            ...this.state,
+            game: g,
             board: b,
-            points: p
+            points: p,
+            showGameOver: isGameOver
         });
     }
 
@@ -59,7 +79,7 @@ export class GameComp extends Component<{}, GameCompState> {
 
         let performable = this.state.game.performMove(direction!);
         if (performable) {
-            this.updateBoardAndPoints();
+            this.updateState(this.state.game);
         }
     }
 
@@ -84,15 +104,50 @@ export class GameComp extends Component<{}, GameCompState> {
                     className="ml-auto mr-4 relative px-3 py-1 rounded-lg text-center">
                     <div className="text-xs font-bold uppercase">Points</div>
                     <div className="font-bold">{this.state.points}</div>
-
                 </div>
             </div>
 
             <div className="p-4 rounded-lg mb-4 text-xl relative overflow-hidden ">
-                <BoardComp board={this.state.board}/>
+                <BoardComp board={this.state.game.board}/>
             </div>
 
-            {/* TODO: add actions for steering the game */}
+            <div className="flex mb-4">
+                <button className="text-xs font-bold uppercase rounded-lg bg-stone-800 text-white ml-auto
+                    px-5 py-2.5 mr-4" onClick={this.startNewGame.bind(this)}>
+                    Restart
+                </button>
+            </div>
+
+            <Transition appear show={this.state.showGameOver} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={this.closeGameOver.bind(this)}>
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Dialog.Panel
+                                className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left
+                                    align-middle shadow-xl transition-all">
+                                <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
+                                    You won!
+                                </Dialog.Title>
+                                <div className="mt-2">
+                                    <p className="text-sm text-gray-500">
+                                        You reached a 2048 tile with a score of {this.state.points}!
+                                    </p>
+                                </div>
+
+                                <div className="mt-4">
+                                    <button type="button" className="inline-flex justify-center rounded-md border
+                                            border-transparent bg-stone-800 px-4 py-2 text-sm font-medium
+                                            hover:bg-stone-800 focus:outline-none focus-visible:ring-2
+                                            focus-visible:ring-stone-800 focus-visible:ring-offset-2 text-white"
+                                            onClick={this.closeGameOver.bind(this)}>
+                                        Back to the game!
+                                    </button>
+                                </div>
+                            </Dialog.Panel>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
         </div>
     }
 }
