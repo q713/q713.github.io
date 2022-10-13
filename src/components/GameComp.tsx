@@ -10,6 +10,7 @@ type GameCompState = {
     board: Board,
     points: number
     showGameOver: boolean,
+    showGameWon: boolean,
 };
 
 export class GameComp extends Component<{}, GameCompState> {
@@ -23,11 +24,12 @@ export class GameComp extends Component<{}, GameCompState> {
             game: g,
             board: g.board,
             points: g.points,
-            showGameOver: false
+            showGameOver: false,
+            showGameWon: false
         }
     }
 
-    private closeGameOver() {
+    private closeGameWon() {
         this.setState({
             ...this.state,
             showGameOver: false
@@ -45,12 +47,14 @@ export class GameComp extends Component<{}, GameCompState> {
         let b = g.board;
         console.log(b);
         let isGameOver = g.isGameOver();
+        let isGameWon = g.isGameWon();
         this.setState({
             ...this.state,
             game: g,
             board: b,
             points: p,
-            showGameOver: isGameOver
+            showGameOver: isGameOver,
+            showGameWon: isGameWon
         });
     }
 
@@ -118,8 +122,8 @@ export class GameComp extends Component<{}, GameCompState> {
                 </button>
             </div>
 
-            <Transition appear show={this.state.showGameOver} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={this.closeGameOver.bind(this)}>
+            <Transition appear show={this.state.showGameWon} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={this.closeGameWon.bind(this)}>
                     <div className="fixed inset-0 overflow-y-auto">
                         <div className="flex min-h-full items-center justify-center p-4 text-center">
                             <Dialog.Panel
@@ -139,7 +143,7 @@ export class GameComp extends Component<{}, GameCompState> {
                                             border-transparent bg-stone-800 px-4 py-2 text-sm font-medium
                                             hover:bg-stone-800 focus:outline-none focus-visible:ring-2
                                             focus-visible:ring-stone-800 focus-visible:ring-offset-2 text-white"
-                                            onClick={this.closeGameOver.bind(this)}>
+                                            onClick={this.closeGameWon.bind(this)}>
                                         Back to the game!
                                     </button>
                                 </div>
