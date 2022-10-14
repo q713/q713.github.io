@@ -1,9 +1,8 @@
-import {Component, Fragment} from "react";
+import {Component} from "react";
 import {Game} from "../../domain/Game";
 import {BoardComp} from "./BoardComp";
 import {GameState, KeyBoardEventCodes, MoveDirection} from "../../domain/Constants";
 import {Board} from "../../domain/Board";
-import {Transition} from "@headlessui/react";
 import {GameEnded} from "./GameEnded";
 
 type GameProps = {
@@ -67,8 +66,9 @@ export class GameComp extends Component<GameProps, GameCompState> {
             state = GameState.GAME_RUNNING;
         }
 
+        console.log(state);
+
         this.setState({
-            ...this.state,
             game: g,
             board: b,
             points: p,
@@ -77,6 +77,8 @@ export class GameComp extends Component<GameProps, GameCompState> {
     }
 
     private handleKeyPress(event: KeyboardEvent) {
+        event.preventDefault();
+
         if (this.state.gameState === GameState.GAME_STOPPED || this.state.gameState === GameState.GAME_OVER)
             return;
 
@@ -101,7 +103,6 @@ export class GameComp extends Component<GameProps, GameCompState> {
             default:
                 return;
         }
-
         let performable = this.state.game.performMove(direction!);
         if (performable) {
             this.updateState(this.state.game);
@@ -109,15 +110,29 @@ export class GameComp extends Component<GameProps, GameCompState> {
     }
 
     componentDidMount() {
-        if (this.state.gameState === GameState.GAME_READY && this.state.game.humanPlayer)
+        console.log("componentDidMount");
+        if (this.state.gameState === GameState.GAME_READY && this.state.game.humanPlayer) {
             window.addEventListener("keydown", this.handleKeyPress.bind(this));
+        }
     }
 
     componentWillUnmount() {
-        window.removeEventListener("keydown", this.handleKeyPress.bind(this));
+        if (this.state.game.humanPlayer) {
+            window.removeEventListener("keydown", this.handleKeyPress.bind(this));
+        }
     }
 
     render() {
+        if ((this.state.gameState === GameState.GAME_READY || this.state.gameState === GameState.GAME_RUNNING)
+            && !this.state.game.humanPlayer) {
+            console.log("dont want to execute in this case");
+            this.state.game.performAiMove().then(performable => {
+                console.log("performable: " + performable);
+                if (performable)
+                    this.updateState(this.state.game);
+            });
+        }
+
         return <div className="max-w-lg mx-auto mt-20 px-8 flex flex-col min-h-screen">
             <div className="flex py-8">
                 <div className="px-2 py-2 font-bold text-4xl rounded-lg">
@@ -144,9 +159,9 @@ export class GameComp extends Component<GameProps, GameCompState> {
                 </button>
             </div>
 
-            <GameEnded  gameState={this.state.gameState} points={this.state.points} closeModal={
+            <GameEnded gameState={this.state.gameState} points={this.state.points} closeModal={
                 this.state.gameState === GameState.GAME_OVER ? this.closeGameOver.bind(this)
-                : this.closeGameWon.bind(this)}/>
+                    : this.closeGameWon.bind(this)}/>
         </div>
     }
 }

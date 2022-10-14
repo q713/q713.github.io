@@ -1,6 +1,7 @@
 import {Board} from "./Board";
 import {MoveDirection} from "./Constants";
 import {ISolver, ExpectimaxSolver} from "./Solver";
+import {delaySeconds} from "../util/util";
 
 export class Game {
     private readonly _width: number;
@@ -9,14 +10,16 @@ export class Game {
     private readonly _board: Board;
     private _points: number;
     private readonly _solver: ISolver | undefined;
+    private readonly _delayInSeconds: number | undefined;
 
-    private constructor(width: number, chanceTwo: number, humanPlayer: boolean, board: Board, solver?: ISolver) {
+    private constructor(width: number, chanceTwo: number, humanPlayer: boolean, board: Board, solver?: ISolver, delayInSeconds?: number) {
         this._width = width;
         this._humanPlayer = humanPlayer;
         this._chanceTwo = chanceTwo;
         this._points = 0;
         this._board = board;
         this._solver = solver;
+        this._delayInSeconds = delayInSeconds;
     }
 
     public static createHumanGame(): Game {
@@ -30,8 +33,10 @@ export class Game {
         let width = 4;
         let chanceTwo = 0.9;
         let board = Board.createBoard(width, chanceTwo);
-        let solver = new ExpectimaxSolver();
-        return new Game(4, chanceTwo, false, board, solver);
+        let maxSearchDepth = 3;
+        let solver = new ExpectimaxSolver(maxSearchDepth);
+        let delayInSeconds = 3;
+        return new Game(4, chanceTwo, false, board, solver, delayInSeconds);
     }
 
     get points(): number {
@@ -72,13 +77,17 @@ export class Game {
         return true
     }
 
-    public performAiMove(): boolean {
-        if (this._humanPlayer || this._solver === undefined)
-            throw Error("mode human player is set or solver is null, please use user input");
+    public async performAiMove(): Promise<boolean> {
+        if (this._humanPlayer || this._solver === undefined || this._delayInSeconds === undefined)
+            throw Error("mode human player is set or solver is null or the delay is undefined, please use user input");
 
         let nextDirection = this._solver.getNextMove(this._board);
+        console.log("next direction: " + nextDirection);
 
-        return this.performMove(nextDirection);
+        await delaySeconds(this._delayInSeconds);
+
+        let performable = this.performMove(nextDirection);
+        return performable;
     }
 
     public copy(): Game {

@@ -1,15 +1,17 @@
 import {Tile} from "./Tile"
 import {MoveDirection} from "./Constants";
-import {randomMinMax} from "../util/Random";
+import {randomMinMax} from "../util/util";
 
 export class Board {
     private readonly _width: number;
     private readonly _chanceTwo: number;
     private readonly _board: Array<Array<Tile>>
+    private readonly _directions: Array<MoveDirection>;
 
     private constructor(width: number, chanceTwo: number, board?: Array<Array<Tile>>) {
         this._width = width;
         this._chanceTwo = chanceTwo;
+        this._directions = [MoveDirection.UP, MoveDirection.DOWN, MoveDirection.LEFT, MoveDirection.RIGHT];
 
         if (board !== undefined) {
             this._board = board;
@@ -83,14 +85,88 @@ export class Board {
         this.addRandomPiece();
     }
 
-    // TODO: fix bug
+    private getColOrRows(cols: Boolean): Array<Array<Tile>> {
+        let colsOrRows = [];
+        for (let a = 0; a < this.width; a++) {
+            let colOrRow = [];
+            for (let b = 0; b < this.width; b++) {
+                if (cols) {
+                    colOrRow.push(this._board[b][a]);
+                } else {
+                    colOrRow.push(this._board[a][b]);
+                }
+            }
+            colsOrRows.push(colOrRow);
+        }
+        return colsOrRows;
+    }
+
+    private getToLeftAndColsOrRowsByDirection(direction: MoveDirection): [boolean, Array<Array<Tile>>] {
+        let toLeft = false;
+        let colsOrRows: Array<Array<Tile>> | undefined = undefined;
+        switch (direction) {
+            case MoveDirection.DOWN:
+            case MoveDirection.UP: {
+                colsOrRows = this.getColOrRows(true);
+                toLeft = direction === MoveDirection.UP;
+                break;
+            }
+
+            case MoveDirection.RIGHT:
+            case MoveDirection.LEFT: {
+                colsOrRows = this.getColOrRows(false);
+                toLeft = direction === MoveDirection.LEFT;
+                break;
+            }
+
+            default:
+                throw new Error(`unable to resolve mode direction ${direction}`);
+        }
+
+        return [toLeft, colsOrRows];
+    }
+
+    private isMovePossibleInColOrRow(colOrRow: Array<Tile>, toLeft: boolean): boolean {
+        let tilesToCheck = toLeft ? colOrRow : colOrRow.reverse();
+
+        for (let index = 0; index < this._width - 1; index++) {
+            let tileA = tilesToCheck[index];
+            let tileB = tilesToCheck[index+1];
+
+            if (tileA._value === 0 || tileB._value === 0 || tileA._value === tileB._value)
+                return true;
+        }
+
+        return false;
+    }
+
+    public isMovePossibleInDirection(direction: MoveDirection): boolean {
+        let leftColsRows = this.getToLeftAndColsOrRowsByDirection(direction);
+        let toLeft = leftColsRows[0];
+        let colsOrRows = leftColsRows[1];
+
+        let possible = false;
+        colsOrRows.forEach((colOrRow) => {
+            possible ||= this.isMovePossibleInColOrRow(colOrRow, toLeft);
+        });
+
+        return possible;
+    }
+
     public isMovePossible(): boolean {
         let freePositions = this.getFreePositions();
         if (freePositions.length > 0)
             return true
 
-        for (let row of this._board) {
-            for (const tile of row) {
+        for (const direction of this._directions) {
+            if (this.isMovePossibleInDirection(direction))
+                return true;
+        }
+
+        /*
+        for (let row = 0; row < this._width; row++) {
+            for (let col = 0; col < this._width; col++) {
+                let tile = this._board[row][col];
                 let xPos = tile._xPos;
                 let yPos = tile._yPos;
 
@@ -111,6 +187,7 @@ export class Board {
                 }
             }
         }
+        */
 
         return false;
     }
@@ -153,50 +230,13 @@ export class Board {
         return [performedMove, mergePoints];
     }
 
-    private getColOrRows(cols: Boolean): Array<Array<Tile>> {
-        let colsOrRows = [];
-        for (let a = 0; a < this.width; a++) {
-            let colOrRow = [];
-            for (let b = 0; b < this.width; b++) {
-                if (cols) {
-                    colOrRow.push(this._board[b][a]);
-                } else {
-                    colOrRow.push(this._board[a][b]);
-                }
-            }
-            colsOrRows.push(colOrRow);
-        }
-        return colsOrRows;
-    }
-
     public move(direction: MoveDirection): [boolean, number] {
         if (!this.isMovePossible())
             throw Error("moves are not possible anymore");
 
-        let toLeft = false
-        let colsOrRows: Array<Array<Tile>> | undefined = undefined;
-
-        switch (direction) {
-            case MoveDirection.DOWN:
-            case MoveDirection.UP: {
-                colsOrRows = this.getColOrRows(true);
-                toLeft = direction === MoveDirection.UP;
-                break;
-            }
-
-            case MoveDirection.RIGHT:
-            case MoveDirection.LEFT: {
-                colsOrRows = this.getColOrRows(false);
-                toLeft = direction === MoveDirection.LEFT;
-                break;
-            }
-
-            default:
-                throw new Error(`unable to resolve mode direction ${direction}`);
-        }
-
-        if (colsOrRows == null)
-            throw Error("could not obtain cols or rows");
+        let leftColsOrRows = this.getToLeftAndColsOrRowsByDirection(direction);
+        let toLeft = leftColsOrRows[0];
+        let colsOrRows = leftColsOrRows[1];
 
         let performedMove = false;
         let points = 0;
@@ -223,6 +263,7 @@ export class Board {
                 let t = this._board[r][c];
                 row[c] = new Tile(r, c, t._value);
             }
+            b[r] = row;
         }
         return new Board(this.width, this.chanceTwo, b);
     }

@@ -1,5 +1,7 @@
 import {Component} from "react";
 import {NavLink} from "react-router-dom";
+import twnetyfourthyeight from "../images/2048.png";
+import {Skills} from "./Skills";
 
 export class Home extends Component<{}, {}> {
     render() {
@@ -11,11 +13,8 @@ export class Home extends Component<{}, {}> {
             <div className="flex py-20 flex-col items-start">
                 <h1 className="text-4xl text-bold text-stone-900 pt-10 pb-20">Projects</h1>
                 <div className="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-4xl p-20">
-                    {/*
-                    TODO: fix show image
-                    <img className="object-cover rounded-t-lg md:rounded-none md:rounded-l-lg"
-                         src="src/images/2048.png"/>
-                    */}
+                    <img className="object-cover w-48 h-48 object-cover rounded-t-lg md:rounded-none md:rounded-l-lg"
+                         src={twnetyfourthyeight}/>
                     <div className="flex flex-col justify-between leading-normal">
                         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                             2048
@@ -41,6 +40,8 @@ export class Home extends Component<{}, {}> {
                     </div>
                 </div>
             </div>
+
+            <Skills/>
         </div>
     }
 }

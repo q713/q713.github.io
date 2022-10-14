@@ -7,11 +7,12 @@ export interface ISolver {
 
 export class ExpectimaxSolver implements ISolver {
 
-    private _maxSearchDepth: number;
-    private _possibleMoveDirections = [MoveDirection.UP, MoveDirection.DOWN, MoveDirection.LEFT, MoveDirection.RIGHT];
+    private readonly _maxSearchDepth: number;
+    private readonly _possibleMoveDirections;
 
     constructor(maxSearchDepth: number) {
         this._maxSearchDepth = maxSearchDepth;
+        this._possibleMoveDirections = [MoveDirection.UP, MoveDirection.DOWN, MoveDirection.LEFT, MoveDirection.RIGHT];
     }
 
     private fitness(board: Board): number {
@@ -19,7 +20,7 @@ export class ExpectimaxSolver implements ISolver {
     }
 
     private maxNode(board: Board, depthLeft: number): number {
-        if (depthLeft == 0)
+        if (depthLeft === 0)
             return this.fitness(board);
 
         let maxFitness = 0.0;
@@ -36,7 +37,7 @@ export class ExpectimaxSolver implements ISolver {
     }
 
     private averageNode(board: Board, depthLeft: number): number {
-        if (depthLeft == 0)
+        if (depthLeft === 0)
             return this.fitness(board);
 
         let freePositions = board.getFreePositions();
@@ -68,7 +69,7 @@ export class ExpectimaxSolver implements ISolver {
 
         let maxFitness = 0.0;
         let bestDirection = MoveDirection.DOWN;
-        this._possibleMoveDirections.forEach((dir) => {
+        for (const dir of this._possibleMoveDirections) {
             let boardCopy = board.copy(true);
             boardCopy.move(dir);
             let fitness = this.averageNode(boardCopy, this._maxSearchDepth - 1);
@@ -76,8 +77,8 @@ export class ExpectimaxSolver implements ISolver {
                 maxFitness = fitness;
                 bestDirection = dir;
             }
-        });
+        }
 
-        return bestDirection
+        return bestDirection;
     }
 }
