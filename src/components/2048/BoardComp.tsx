@@ -1,11 +1,10 @@
 import {Component} from "react";
-import {Board} from "../domain/Board";
 import {TileComp} from "./TileComp";
+import {Board} from "../../domain/Board";
 
 type BoardProps = {
     board: Board
 };
-
 
 export class BoardComp extends Component<BoardProps, {}> {
 

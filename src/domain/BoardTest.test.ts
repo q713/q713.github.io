@@ -1,4 +1,5 @@
 import {Board} from "./Board";
+import {MoveDirection} from "./Constants";
 
 const WIDTH = 4;
 const CHANCE_TWO = 0.9;
@@ -41,7 +42,57 @@ describe("test move possible", () => {
 });
 
 describe("test merge", () => {
+    test("impossible move", () => {
+        let board = createImpossibleBoard();
 
+        expect(() => board.move(MoveDirection.UP)).toThrowError();
+    });
+
+    test("merge simple down", () => {
+       let board = Board.createBoard(WIDTH, CHANCE_TWO);
+       board.setPositionValue(0,0, 2);
+       board.setPositionValue(1,0,2);
+       board.move(MoveDirection.DOWN);
+
+       expect(board.board[WIDTH-1][0]._value).toBe(4);
+    });
+
+    test("merge simple right", () => {
+        let board = Board.createBoard(WIDTH, CHANCE_TWO);
+        board.setPositionValue(0, 0, 2);
+        board.setPositionValue(0,1, 2);
+        board.move(MoveDirection.RIGHT);
+
+        expect(board.board[0][WIDTH-1]._value).toBe(4);
+    });
+
+    test("test merge only two in row mergable", () => {
+        let board = Board.createBoard(WIDTH, CHANCE_TWO);
+        board.setPositionValue(0, 0, 2);
+        board.setPositionValue(0,1, 2);
+        board.setPositionValue(0,2, 4);
+        board.setPositionValue(0,3, 8);
+        board.move(MoveDirection.RIGHT);
+
+        expect(board.board[0][3]._value).toBe(8);
+        expect(board.board[0][2]._value).toBe(4);
+        expect(board.board[0][1]._value).toBe(4);
+        expect(board.board[0][0]._value).toBe(0);
+    });
+
+    test("merge row of twos", () => {
+        let board = Board.createBoard(WIDTH, CHANCE_TWO);
+        board.setPositionValue(0, 0, 2);
+        board.setPositionValue(0,1, 2);
+        board.setPositionValue(0,2, 2);
+        board.setPositionValue(0,3, 2);
+        board.move(MoveDirection.RIGHT);
+
+        expect(board.board[0][3]._value).toBe(4);
+        expect(board.board[0][2]._value).toBe(4);
+        expect(board.board[0][1]._value).toBe(0);
+        expect(board.board[0][0]._value).toBe(0);
+    });
 });
 
 export {}

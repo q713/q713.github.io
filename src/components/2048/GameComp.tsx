@@ -1,9 +1,10 @@
 import {Component, Fragment} from "react";
-import {Game} from "../domain/Game";
+import {Game} from "../../domain/Game";
 import {BoardComp} from "./BoardComp";
-import {GameState, KeyBoardEventCodes, MoveDirection} from "../domain/Constants";
-import {Board} from "../domain/Board";
-import {Dialog, Transition} from "@headlessui/react";
+import {GameState, KeyBoardEventCodes, MoveDirection} from "../../domain/Constants";
+import {Board} from "../../domain/Board";
+import {Transition} from "@headlessui/react";
+import {GameEnded} from "./GameEnded";
 
 type GameProps = {
     humanPlayer: boolean
@@ -76,7 +77,7 @@ export class GameComp extends Component<GameProps, GameCompState> {
     }
 
     private handleKeyPress(event: KeyboardEvent) {
-        if (this.state.gameState == GameState.GAME_STOPPED || this.state.gameState == GameState.GAME_OVER)
+        if (this.state.gameState === GameState.GAME_STOPPED || this.state.gameState === GameState.GAME_OVER)
             return;
 
         let direction: MoveDirection | undefined = undefined;
@@ -108,7 +109,7 @@ export class GameComp extends Component<GameProps, GameCompState> {
     }
 
     componentDidMount() {
-        if (this.state.gameState == GameState.GAME_READY && this.state.game.humanPlayer)
+        if (this.state.gameState === GameState.GAME_READY && this.state.game.humanPlayer)
             window.addEventListener("keydown", this.handleKeyPress.bind(this));
     }
 
@@ -117,7 +118,7 @@ export class GameComp extends Component<GameProps, GameCompState> {
     }
 
     render() {
-        return <div className="max-w-lg mx-auto px-8 flex flex-col min-h-screen">
+        return <div className="max-w-lg mx-auto mt-20 px-8 flex flex-col min-h-screen">
             <div className="flex py-8">
                 <div className="px-2 py-2 font-bold text-4xl rounded-lg">
                     2048
@@ -143,36 +144,9 @@ export class GameComp extends Component<GameProps, GameCompState> {
                 </button>
             </div>
 
-            <Transition appear show={this.state.gameState == GameState.GAME_WON} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={this.closeGameWon.bind(this)}>
-                    <div className="fixed inset-0 overflow-y-auto">
-                        <div className="flex min-h-full items-center justify-center p-4 text-center">
-                            <Dialog.Panel
-                                className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left
-                                    align-middle shadow-xl transition-all">
-                                <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                                    You won!
-                                </Dialog.Title>
-                                <div className="mt-2">
-                                    <p className="text-sm text-gray-500">
-                                        You reached a 2048 tile with a score of {this.state.points}!
-                                    </p>
-                                </div>
-
-                                <div className="mt-4">
-                                    <button type="button" className="inline-flex justify-center rounded-md border
-                                            border-transparent bg-stone-800 px-4 py-2 text-sm font-medium
-                                            hover:bg-stone-800 focus:outline-none focus-visible:ring-2
-                                            focus-visible:ring-stone-800 focus-visible:ring-offset-2 text-white"
-                                            onClick={this.closeGameWon.bind(this)}>
-                                        Back to the game!
-                                    </button>
-                                </div>
-                            </Dialog.Panel>
-                        </div>
-                    </div>
-                </Dialog>
-            </Transition>
+            <GameEnded  gameState={this.state.gameState} points={this.state.points} closeModal={
+                this.state.gameState === GameState.GAME_OVER ? this.closeGameOver.bind(this)
+                : this.closeGameWon.bind(this)}/>
         </div>
     }
 }

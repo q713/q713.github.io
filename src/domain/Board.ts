@@ -89,28 +89,30 @@ export class Board {
         if (freePositions.length > 0)
             return true
 
-        this._board.forEach((row: Array<Tile>) => {
-            row.forEach(
-                (tile: Tile) => {
-                    let xPos = tile._xPos;
-                    let yPos = tile._yPos;
+        for (let row of this._board) {
+            for (const tile of row) {
+                let xPos = tile._xPos;
+                let yPos = tile._yPos;
 
-                    for (let x=-1; x<2; x++) {
-                        for (let y=-1; y<2; y++) {
-                            let newX = xPos - x;
-                            let newY = yPos - y;
+                let positionsToTry = [
+                    [1,0],[0,1],[-1,0],[0,-1]
+                ]
 
-                            if (newX >= 0 && newY >= 0 && newX < this._width && newY < this._width
-                                && this._board[newY][newX]._value === tile._value
-                                && (newX !== xPos || newY !== yPos)
-                            ) {
-                                return true
-                            }
-                        }
+                for (let yX of positionsToTry) {
+                    let newX = xPos - yX[1];
+                    let newY = yPos - yX[0];
+
+                    if (newX >= 0 && newY >= 0 && newX < this._width && newY < this._width
+                        && this._board[newY][newX]._value === tile._value
+                        && (newX !== xPos || newY !== yPos)
+                    ) {
+                        return true;
                     }
-                })
-        });
-        return false
+                }
+            }
+        }
+
+        return false;
     }
 
     // TODO: fix bug

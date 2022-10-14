@@ -1,5 +1,5 @@
 import {Component} from "react";
-import {Tile} from "../domain/Tile";
+import {Tile} from "../../domain/Tile";
 
 type TileCompProp = {
     tile: Tile
