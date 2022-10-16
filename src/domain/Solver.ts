@@ -64,12 +64,17 @@ export class ExpectimaxSolver implements ISolver {
         if (this._maxSearchDepth <= 0)
             throw Error("search depth must be at least 1");
 
-        if (!board.isMovePossible())
+        let possibleDirections: Array<MoveDirection> = [];
+        for (const dir of this._possibleMoveDirections) {
+            if (board.isMovePossibleInDirection(dir))
+                possibleDirections.push(dir);
+        }
+        if (possibleDirections.length < 1)
             throw Error("there is not longer a move possibles");
 
         let maxFitness = 0.0;
-        let bestDirection = MoveDirection.DOWN;
-        for (const dir of this._possibleMoveDirections) {
+        let bestDirection = possibleDirections[0];
+        for (const dir of possibleDirections) {
             let boardCopy = board.copy(true);
             boardCopy.move(dir);
             let fitness = this.averageNode(boardCopy, this._maxSearchDepth - 1);

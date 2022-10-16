@@ -13,31 +13,31 @@ export const Skills = (): JSX.Element => {
         <h1 className="text-4xl text-bold text-stone-900 py-50">Skills</h1>
         <div className="flex grid grid-cols-3 gap-x-4 gap-y-0 items-center pt-20">
             <div className="justify-center items-center flex shadow-md rounded-lg w-full h-full p-10">
-                <img className="w-60 h-30" src={java}/>
+                <img className="w-60 h-30" src={java} alt=""/>
             </div>
             <div className="justify-center items-center flex shadow-md rounded-lg w-full h-full p-10">
-                <img className="w-60 h-40" src={spring}/>
+                <img className="w-60 h-40" src={spring} alt=""/>
             </div>
             <div className="justify-center items-center flex shadow-md rounded-lg w-full h-full p-10">
-                <img className="w-60 h-30" src={php}/>
+                <img className="w-60 h-30" src={php} alt=""/>
             </div>
             <div className="justify-center items-center flex shadow-md rounded-lg w-full h-full p-10">
-                <img className="w-60 h-30" src={camunda}/>
+                <img className="w-60 h-30" src={camunda} alt=""/>
             </div>
             <div className="justify-center items-center flex shadow-md rounded-lg w-full h-full p-10">
-                <img className="w-60 h-40" src={cpp}/>
+                <img className="w-60 h-40" src={cpp} alt=""/>
             </div>
             <div className="justify-center items-center flex shadow-md rounded-lg w-full h-full p-10">
-                <img className="w-60 h-50" src={c}/>
+                <img className="w-60 h-50" src={c} alt=""/>
             </div>
             <div className="justify-center items-center flex shadow-md rounded-lg w-full h-full p-2">
-                <img className="w-30 h-60" src={ts}/>
+                <img className="w-30 h-60" src={ts} alt=""/>
             </div>
             <div className="justify-center items-center flex shadow-md rounded-lg w-full h-full p-2">
-                <img className="w-60 h-40" src={react}/>
+                <img className="w-60 h-40" src={react} alt=""/>
             </div>
             <div className="justify-center items-center flex shadow-md rounded-lg w-full h-full p-2">
-                <img className="w-60 h-40" src={kotlin}/>
+                <img className="w-60 h-40" src={kotlin} alt=""/>
             </div>
         </div>
     </div>

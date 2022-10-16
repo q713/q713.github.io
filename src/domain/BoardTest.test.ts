@@ -95,12 +95,18 @@ describe("test merge", () => {
         expect(board.board[0][0]._value).toBe(0);
     });
 
-    test("test", () => {
-        let g = Game.createAiGame();
-        //g.performAiMove();
+    test("test double merge", () => {
+        let board = Board.createBoard(WIDTH, CHANCE_TWO);
+        board.setPositionValue(0, 0, 128);
+        board.setPositionValue(0,1, 64);
+        board.setPositionValue(0,2, 64);
+        board.setPositionValue(0,3, 2);
+        board.move(MoveDirection.LEFT);
 
-        let copy = g.board.copy(true);
-        console.log(copy);
+        expect(board.board[0][3]._value).toBe(0);
+        expect(board.board[0][2]._value).toBe(2);
+        expect(board.board[0][1]._value).toBe(128);
+        expect(board.board[0][0]._value).toBe(128);
     });
 });
 

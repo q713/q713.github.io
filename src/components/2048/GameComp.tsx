@@ -110,7 +110,6 @@ export class GameComp extends Component<GameProps, GameCompState> {
     }
 
     componentDidMount() {
-        console.log("componentDidMount");
         if (this.state.gameState === GameState.GAME_READY && this.state.game.humanPlayer) {
             window.addEventListener("keydown", this.handleKeyPress.bind(this));
         }
@@ -125,12 +124,10 @@ export class GameComp extends Component<GameProps, GameCompState> {
     render() {
         if ((this.state.gameState === GameState.GAME_READY || this.state.gameState === GameState.GAME_RUNNING)
             && !this.state.game.humanPlayer) {
-            console.log("dont want to execute in this case");
-            this.state.game.performAiMove().then(performable => {
-                console.log("performable: " + performable);
-                if (performable)
-                    this.updateState(this.state.game);
-            });
+            //this.state.game.performAiMove().then(performable => {
+            //    if (performable)
+            //        this.updateState(this.state.game);
+            //});
         }
 
         return <div className="max-w-lg mx-auto mt-20 px-8 flex flex-col min-h-screen">

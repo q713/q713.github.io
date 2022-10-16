@@ -129,15 +129,25 @@ export class Board {
     private isMovePossibleInColOrRow(colOrRow: Array<Tile>, toLeft: boolean): boolean {
         let tilesToCheck = toLeft ? colOrRow : colOrRow.reverse();
 
+        let result = false;
         for (let index = 0; index < this._width - 1; index++) {
             let tileA = tilesToCheck[index];
             let tileB = tilesToCheck[index+1];
 
-            if (tileA._value === 0 || tileB._value === 0 || tileA._value === tileB._value)
+            if (tileA._value === 0) {
+                let toCheck = index + 1;
+                while (toCheck < this._width) {
+                    if (tilesToCheck[toCheck]._value !== 0)
+                        return true;
+                }
+            }
+
+            if (tileA._value === tileB._value) {
                 return true;
+            }
         }
 
-        return false;
+        return result;
     }
 
     public isMovePossibleInDirection(direction: MoveDirection): boolean {
@@ -163,68 +173,52 @@ export class Board {
                 return true;
         }
 
-        /*
-        for (let row = 0; row < this._width; row++) {
-            for (let col = 0; col < this._width; col++) {
-                let tile = this._board[row][col];
-                let xPos = tile._xPos;
-                let yPos = tile._yPos;
-
-                let positionsToTry = [
-                    [1,0],[0,1],[-1,0],[0,-1]
-                ]
-
-                for (let yX of positionsToTry) {
-                    let newX = xPos - yX[1];
-                    let newY = yPos - yX[0];
-
-                    if (newX >= 0 && newY >= 0 && newX < this._width && newY < this._width
-                        && this._board[newY][newX]._value === tile._value
-                        && (newX !== xPos || newY !== yPos)
-                    ) {
-                        return true;
-                    }
-                }
-            }
-        }
-        */
-
         return false;
     }
 
-    // TODO: fix bug
     private mergeLeft(toMerge: Array<Tile>, toLeft: boolean): [boolean, number] {
         let colOrRow = !toLeft ? toMerge.reverse() : toMerge;
 
         let performedMove = false;
         let mergePoints = 0;
         let indexToWrite = 0;
-        for (let indexToMerge=1; indexToMerge < colOrRow.length; indexToMerge++) {
+        let indexToMerge = 0;
+
+        while (indexToMerge < colOrRow.length && indexToWrite < colOrRow.length) {
+            if (indexToWrite === indexToMerge) {
+                indexToMerge += 1;
+                continue;
+            }
+
             let tileToWrite = colOrRow[indexToWrite];
             let tileToMerge = colOrRow[indexToMerge];
 
-            if (tileToWrite._value === tileToMerge._value) {
+            if (tileToWrite._value === tileToMerge._value && tileToWrite._value !== 0 && tileToMerge._value !== 0) {
                 tileToWrite._value *= 2;
                 mergePoints += tileToWrite._value;
                 tileToMerge._value = 0;
                 performedMove = true;
-            } else {
-                if (tileToWrite._value === 0) {
-                    tileToWrite._value = tileToMerge._value;
-                    tileToMerge._value = 0;
-                    performedMove = true;
-                } else {
-                    if (tileToMerge._value !== 0) {
-                        indexToWrite++;
-                        tileToWrite = colOrRow[indexToWrite];
-                        tileToWrite._value = tileToMerge._value;
-                        if (tileToMerge._yPos !== tileToWrite._yPos || tileToMerge._xPos !== tileToWrite._xPos) {
-                            tileToMerge._value = 0;
-                            performedMove = true;
-                        }
-                    }
-                }
+                indexToWrite += 1;
+                indexToMerge += 1;
+                continue;
             }
+
+            if (tileToWrite._value === 0 && tileToMerge._value !== 0) {
+                tileToWrite._value = tileToMerge._value;
+                tileToMerge._value = 0;
+                performedMove = true;
+                indexToWrite += 1;
+                indexToMerge += 1;
+                continue;
+            }
+
+            if (indexToWrite === indexToMerge-1 && tileToWrite._value !== tileToMerge._value && tileToWrite._value !== 0 && tileToMerge._value !== 0) {
+                indexToWrite += 1;
+                indexToMerge += 1;
+                continue;
+            }
+
+            indexToWrite += 1;
         }
 
         return [performedMove, mergePoints];

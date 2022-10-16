@@ -14,7 +14,7 @@ export class Home extends Component<{}, {}> {
                 <h1 className="text-4xl text-bold text-stone-900 pt-10 pb-20">Projects</h1>
                 <div className="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-4xl p-20">
                     <img className="object-cover w-48 h-48 object-cover rounded-t-lg md:rounded-none md:rounded-l-lg"
-                         src={twnetyfourthyeight}/>
+                         src={twnetyfourthyeight} alt=""/>
                     <div className="flex flex-col justify-between leading-normal">
                         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                             2048
@@ -29,7 +29,7 @@ export class Home extends Component<{}, {}> {
                                 <NavLink to="2048" state={{humanPlayer: true}} className="text-xs font-bold uppercase
                                         rounded-lg bg-white border-stone-900 border-2 text-stone-900 ml-auto px-5 py-2.5
                                         mr-4 hover:bg-stone-100">
-                                    Play yourself
+                                    Play by yourself
                                 </NavLink>
                                 <NavLink to="2048" state={{humanPlayer: false}} className="text-xs font-bold uppercase
                                         rounded-lg bg-stone-900 text-white ml-auto px-5 py-2.5 hover:bg-stone-800">
