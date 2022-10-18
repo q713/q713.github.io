@@ -139,10 +139,10 @@ export class Board {
                 while (toCheck < this._width) {
                     if (tilesToCheck[toCheck]._value !== 0)
                         return true;
-                }
-            }
 
-            if (tileA._value === tileB._value) {
+                    toCheck += 1;
+                }
+            } else if (tileA._value === tileB._value) {
                 return true;
             }
         }
@@ -154,10 +154,10 @@ export class Board {
         let leftColsRows = this.getToLeftAndColsOrRowsByDirection(direction);
         let toLeft = leftColsRows[0];
         let colsOrRows = leftColsRows[1];
-
         let possible = false;
+
         colsOrRows.forEach((colOrRow) => {
-            possible ||= this.isMovePossibleInColOrRow(colOrRow, toLeft);
+                possible ||= this.isMovePossibleInColOrRow(colOrRow, toLeft);
         });
 
         return possible;
@@ -217,7 +217,11 @@ export class Board {
                 continue;
             }
 
-            indexToMerge += 1;
+            if (tileToWrite._value !== 0 && tileToMerge._value !== 0) {
+                indexToWrite += 1;
+            } else {
+                indexToMerge += 1;
+            }
         }
 
         return [performedMove, mergePoints];
@@ -261,16 +265,20 @@ export class Board {
         return new Board(this.width, this.chanceTwo, b);
     }
 
-    public largestPieceValue(): number {
-        let largestValue = -1;
+    public largestPiece(): Tile {
+        let largestPiece = this._board[0][0];
         this._board.forEach(function (row) {
             row.forEach(function (tile) {
-                if (tile._value > largestValue)
-                    largestValue = tile._value;
+                if (tile._value > largestPiece._value)
+                    largestPiece = tile;
             })
         });
+        return largestPiece;
+    }
 
-        return largestValue;
+    public largestPieceValue(): number {
+        let largestPiece = this.largestPiece();
+        return largestPiece._value;
     }
 }
 

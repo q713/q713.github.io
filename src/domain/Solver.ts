@@ -16,7 +16,16 @@ export class ExpectimaxSolver implements ISolver {
     }
 
     private fitness(board: Board): number {
-        return board.largestPieceValue();
+        let score = board.largestPieceValue();
+        let largestPiece = board.largestPiece();
+        let goodLargestPiecePosiitons = [[0,0],[0,board.width-1],[board.width-1, 0],[board.width-1, board.width-1]];
+        goodLargestPiecePosiitons.forEach((largestPos) => {
+            if (largestPos[0] === largestPiece._yPos && largestPos[1] === largestPiece._yPos) {
+                score *= 1.5;
+            }
+        })
+
+        return score;
     }
 
     private maxNode(board: Board, depthLeft: number): number {

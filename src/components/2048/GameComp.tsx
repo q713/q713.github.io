@@ -4,6 +4,7 @@ import {BoardComp} from "./BoardComp";
 import {GameState, KeyBoardEventCodes, MoveDirection} from "../../domain/Constants";
 import {Board} from "../../domain/Board";
 import {GameEnded} from "./GameEnded";
+import {NavLink} from "react-router-dom";
 
 type GameProps = {
     humanPlayer: boolean
@@ -109,9 +110,27 @@ export class GameComp extends Component<GameProps, GameCompState> {
         }
     }
 
+    private makeAIMove() {
+        this.state.game.performAiMove().then(performable => {
+            if (performable)
+                this.updateState(this.state.game);
+        });
+    }
+
     componentDidMount() {
         if (this.state.gameState === GameState.GAME_READY && this.state.game.humanPlayer) {
             window.addEventListener("keydown", this.handleKeyPress.bind(this));
+        }
+        if ((this.state.gameState === GameState.GAME_READY || this.state.gameState === GameState.GAME_RUNNING)
+            && !this.state.game.humanPlayer) {
+            this.makeAIMove();
+        }
+    }
+
+    componentDidUpdate(prevProps: Readonly<GameProps>, prevState: Readonly<GameCompState>, snapshot?: any) {
+        if ((this.state.gameState === GameState.GAME_READY || this.state.gameState === GameState.GAME_RUNNING)
+            && !this.state.game.humanPlayer) {
+            this.makeAIMove();
         }
     }
 
@@ -122,14 +141,6 @@ export class GameComp extends Component<GameProps, GameCompState> {
     }
 
     render() {
-        if ((this.state.gameState === GameState.GAME_READY || this.state.gameState === GameState.GAME_RUNNING)
-            && !this.state.game.humanPlayer) {
-            this.state.game.performAiMove().then(performable => {
-                if (performable)
-                    this.updateState(this.state.game);
-            });
-        }
-
         return <div className="max-w-lg mx-auto mt-20 px-8 flex flex-col min-h-screen">
             <div className="flex py-8">
                 <div className="px-2 py-2 font-bold text-4xl rounded-lg">
@@ -150,8 +161,12 @@ export class GameComp extends Component<GameProps, GameCompState> {
             </div>
 
             <div className="flex mb-4">
-                <button className="text-xs font-bold uppercase rounded-lg bg-stone-800 text-white ml-auto
-                    px-5 py-2.5 mr-4" onClick={this.startNewGame.bind(this)}>
+                <NavLink to="/" className="text-xs font-bold uppercase rounded-lg bg-stone-900 text-white px-5 py-2.5
+                    hover:bg-stone-800 ml-4">
+                    Back
+                </NavLink>
+                <button className="text-xs font-bold uppercase rounded-lg bg-stone-900 text-white ml-auto
+                    px-5 py-2.5 mr-4 hover:bg-stone-800" onClick={this.startNewGame.bind(this)}>
                     Restart
                 </button>
             </div>
