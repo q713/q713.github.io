@@ -1,6 +1,6 @@
 import {Component} from "react";
 import {TileComp} from "./TileComp";
-import {Board} from "../../domain/Board";
+import {Board} from "../../domain/2048/Board";
 
 type BoardProps = {
     board: Board

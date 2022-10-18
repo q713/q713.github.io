@@ -1,5 +1,5 @@
 import {Board} from "./Board";
-import {MoveDirection} from "./Constants";
+import {MoveDirection} from "../Constants";
 
 const WIDTH = 4;
 const CHANCE_TWO = 0.9;
@@ -80,6 +80,32 @@ describe("test move possible", () => {
         expect(board.isMovePossibleInDirection(MoveDirection.RIGHT)).toBe(true);
         expect(board.isMovePossibleInDirection(MoveDirection.LEFT)).toBe(false);
         expect(board.isMovePossibleInDirection(MoveDirection.UP)).toBe(false);
+    });
+
+    test("ai board no move possible", () => {
+        let board = Board.createBoard(WIDTH, CHANCE_TWO);
+        board.setPositionValue(0, 0, 4);
+        board.setPositionValue(0, 1, 8);
+        board.setPositionValue(0, 2, 128);
+        board.setPositionValue(0, 3, 2);
+        board.setPositionValue(1, 0, 2);
+        board.setPositionValue(1, 1, 4);
+        board.setPositionValue(1, 2, 128);
+        board.setPositionValue(1, 3, 4);
+        board.setPositionValue(2, 0, 8);
+        board.setPositionValue(2, 1, 4);
+        board.setPositionValue(2, 2, 16);
+        board.setPositionValue(2, 3, 2);
+        board.setPositionValue(3, 0, 2);
+        board.setPositionValue(3, 1, 4);
+        board.setPositionValue(3, 2, 8);
+        board.setPositionValue(3, 3, 4);
+
+        expect(board.isMovePossibleInDirection(MoveDirection.DOWN)).toBe(true);
+        expect(board.isMovePossibleInDirection(MoveDirection.UP)).toBe(true);
+        expect(board.isMovePossibleInDirection(MoveDirection.LEFT)).toBe(false);
+        expect(board.isMovePossibleInDirection(MoveDirection.RIGHT)).toBe(false);
+        expect(board.isMovePossible()).toBe(true);
     });
 });
 

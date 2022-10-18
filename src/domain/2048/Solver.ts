@@ -1,5 +1,5 @@
 import {Board} from './Board';
-import {MoveDirection} from "./Constants";
+import {MoveDirection} from "../Constants";
 
 export interface ISolver {
     getNextMove(board: Board): MoveDirection;
@@ -16,16 +16,49 @@ export class ExpectimaxSolver implements ISolver {
     }
 
     private fitness(board: Board): number {
-        let score = board.largestPieceValue();
+        let largestPieceInCorner = false;
         let largestPiece = board.largestPiece();
-        let goodLargestPiecePosiitons = [[0,0],[0,board.width-1],[board.width-1, 0],[board.width-1, board.width-1]];
+        let goodLargestPiecePosiitons = [[0, 0], [0, board.width - 1], [board.width - 1, 0], [board.width - 1, board.width - 1]];
         goodLargestPiecePosiitons.forEach((largestPos) => {
             if (largestPos[0] === largestPiece._yPos && largestPos[1] === largestPiece._yPos) {
-                score *= 1.5;
+                largestPieceInCorner = true;
             }
         })
 
+        let akkuTileValues = 0;
+        let distance = 0.0;
+        let soroundingTiles = [[-1, -1], [1, 1], [-1, 1], [1, -1]];
+        board.board.forEach((row) => {
+            row.forEach(tile => {
+                akkuTileValues += tile._value;
+                let tXpos = tile._xPos;
+                let tYpos = tile._yPos;
+                soroundingTiles.forEach(stp => {
+                    let sXpos = tXpos + stp[0];
+                    let sYpos = tYpos + stp[1];
+                    if (sXpos >= 0 && sXpos < board.width && sYpos >= 0 && sYpos < board.width) {
+                        let souroundingTile = board.board[sYpos][sXpos];
+                        distance += Math.abs(tile._value - souroundingTile._value);
+                    }
+                });
+            });
+        });
+
+        let score = board.largestPieceValue() + akkuTileValues + distance + board.getFreePositions().length * 10;
+        if (largestPieceInCorner) {
+            score += akkuTileValues;
+        }
+
         return score;
+    }
+
+    private getPossibleDirections(board: Board): Array<MoveDirection> {
+        let possibleDirections: Array<MoveDirection> = [];
+        for (const dir of this._possibleMoveDirections) {
+            if (board.isMovePossibleInDirection(dir))
+                possibleDirections.push(dir);
+        }
+        return possibleDirections;
     }
 
     private maxNode(board: Board, depthLeft: number): number {
@@ -33,8 +66,8 @@ export class ExpectimaxSolver implements ISolver {
             return this.fitness(board);
 
         let maxFitness = 0.0;
-
-        for (const dir of this._possibleMoveDirections) {
+        let posDir = this.getPossibleDirections(board);
+        for (const dir of posDir) {
             let boardCopy = board.copy(true);
             boardCopy.move(dir);
             let curFitness = this.averageNode(boardCopy, depthLeft - 1);
@@ -73,12 +106,10 @@ export class ExpectimaxSolver implements ISolver {
         if (this._maxSearchDepth <= 0)
             throw Error("search depth must be at least 1");
 
-        let possibleDirections: Array<MoveDirection> = [];
-        for (const dir of this._possibleMoveDirections) {
-            if (board.isMovePossibleInDirection(dir))
-                possibleDirections.push(dir);
-        }
-        console.log(possibleDirections);
+        let possibleDirections = this.getPossibleDirections(board);
+        if (possibleDirections.length === 1)
+            return possibleDirections[0];
+
         if (possibleDirections.length < 1)
             throw Error("there is not longer a move possibles");
 

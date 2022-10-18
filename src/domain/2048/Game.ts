@@ -1,7 +1,7 @@
 import {Board} from "./Board";
-import {MoveDirection} from "./Constants";
+import {MoveDirection} from "../Constants";
 import {ISolver, ExpectimaxSolver} from "./Solver";
-import {delaySeconds} from "../util/util";
+import {delaySeconds} from "../../util/util";
 
 export class Game {
     private readonly _width: number;
@@ -33,9 +33,9 @@ export class Game {
         let width = 4;
         let chanceTwo = 0.9;
         let board = Board.createBoard(width, chanceTwo);
-        let maxSearchDepth = 3;
+        let maxSearchDepth = 6;
         let solver = new ExpectimaxSolver(maxSearchDepth);
-        let delayInSeconds = 3;
+        let delayInSeconds = 0.5;
         return new Game(4, chanceTwo, false, board, solver, delayInSeconds);
     }
 

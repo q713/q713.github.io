@@ -6,11 +6,19 @@ import {Skills} from "./Skills";
 export class Home extends Component<{}, {}> {
     render() {
         return <div className="max-w-4xl mx-auto px-10 flex flex-col divide-y">
-            <div className="flex py-20">
-                <h1 className="text-4xl text-bold text-stone-900 py-10">About Me</h1>
+            <div className="flex py-10 flex-col items-start gap-4 pb-20">
+                <h1 className="text-4xl text-bold text-stone-900 py-10 mt-20">About Me</h1>
+
+                <p>Hello I'm Jakob. Im a german computer science and working student.</p>
+                <p>Currently I'm working on my masters thesis at the <a className="font-bold" href="https://www.uni-saarland.de/start.html">Universität des Saarlandes</a>.</p>
+                <p>Besides studying I'm a working student at <a className="font-bold" href="https://www.inexio.net/">inexio</a> in thesofwtare development department.</p>
+
+                <p className="mt-10">Below you can see some of my projects that you can try directly in your Browser!</p>
+                <p>I made them just for fun in my spare time.</p>
+                <p>More projects and those that i made at the university you can find on my TODO account.</p>
             </div>
 
-            <div className="flex py-20 flex-col items-start">
+            <div className="flex py-10 pb-20 flex-col items-start">
                 <h1 className="text-4xl text-bold text-stone-900 pt-10 pb-20">Projects</h1>
                 <div className="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-4xl p-20">
                     <img className="object-cover w-48 h-48 object-cover rounded-t-lg md:rounded-none md:rounded-l-lg"

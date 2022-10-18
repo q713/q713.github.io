@@ -1,8 +1,8 @@
 import {Component} from "react";
-import {Game} from "../../domain/Game";
+import {Game} from "../../domain/2048/Game";
 import {BoardComp} from "./BoardComp";
 import {GameState, KeyBoardEventCodes, MoveDirection} from "../../domain/Constants";
-import {Board} from "../../domain/Board";
+import {Board} from "../../domain/2048/Board";
 import {GameEnded} from "./GameEnded";
 import {NavLink} from "react-router-dom";
 
@@ -19,7 +19,6 @@ type GameCompState = {
 
 export class GameComp extends Component<GameProps, GameCompState> {
 
-    //readonly state: GameCompState;
     constructor(props: GameProps) {
         super(props);
         let g = props.humanPlayer ? Game.createHumanGame() : Game.createAiGame();
@@ -47,7 +46,7 @@ export class GameComp extends Component<GameProps, GameCompState> {
     }
 
     private startNewGame() {
-        let g = Game.createHumanGame();
+        let g = this.state.game.humanPlayer ? Game.createHumanGame() : Game.createAiGame();
         g.initGame();
         this.updateState(g);
     }
@@ -66,8 +65,6 @@ export class GameComp extends Component<GameProps, GameCompState> {
         } else {
             state = GameState.GAME_RUNNING;
         }
-
-        console.log(state);
 
         this.setState({
             game: g,
@@ -110,26 +107,34 @@ export class GameComp extends Component<GameProps, GameCompState> {
         }
     }
 
+    private shouldPerformAiMove(): boolean {
+        return (this.state.gameState === GameState.GAME_READY || this.state.gameState === GameState.GAME_RUNNING) && !this.state.game.humanPlayer;
+    }
+
     private makeAIMove() {
-        this.state.game.performAiMove().then(performable => {
-            if (performable)
-                this.updateState(this.state.game);
-        });
+        try {
+            this.state.game.performAiMove().then(performable => {
+                if (performable)
+                    this.updateState(this.state.game);
+            });
+        } catch (e) {
+           this.updateState(this.state.game);
+        }
     }
 
     componentDidMount() {
         if (this.state.gameState === GameState.GAME_READY && this.state.game.humanPlayer) {
             window.addEventListener("keydown", this.handleKeyPress.bind(this));
         }
-        if ((this.state.gameState === GameState.GAME_READY || this.state.gameState === GameState.GAME_RUNNING)
-            && !this.state.game.humanPlayer) {
+
+        if (this.shouldPerformAiMove() && this.state.gameState == GameState.GAME_READY) {
             this.makeAIMove();
+            console.log("ksjdfgjksdflsbdflb");
         }
     }
 
     componentDidUpdate(prevProps: Readonly<GameProps>, prevState: Readonly<GameCompState>, snapshot?: any) {
-        if ((this.state.gameState === GameState.GAME_READY || this.state.gameState === GameState.GAME_RUNNING)
-            && !this.state.game.humanPlayer) {
+        if (this.shouldPerformAiMove()) {
             this.makeAIMove();
         }
     }

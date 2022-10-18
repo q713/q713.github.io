@@ -1,6 +1,6 @@
 import {Tile} from "./Tile"
-import {MoveDirection} from "./Constants";
-import {randomMinMax} from "../util/util";
+import {MoveDirection} from "../Constants";
+import {randomMinMax} from "../../util/util";
 
 export class Board {
     private readonly _width: number;
