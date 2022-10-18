@@ -207,7 +207,6 @@ export class Board {
                 tileToWrite._value = tileToMerge._value;
                 tileToMerge._value = 0;
                 performedMove = true;
-                indexToWrite += 1;
                 indexToMerge += 1;
                 continue;
             }
@@ -218,7 +217,7 @@ export class Board {
                 continue;
             }
 
-            indexToWrite += 1;
+            indexToMerge += 1;
         }
 
         return [performedMove, mergePoints];

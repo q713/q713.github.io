@@ -1,6 +1,5 @@
 import {Board} from "./Board";
 import {MoveDirection} from "./Constants";
-import {Game} from "./Game";
 
 const WIDTH = 4;
 const CHANCE_TWO = 0.9;

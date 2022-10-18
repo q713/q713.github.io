@@ -69,6 +69,7 @@ export class ExpectimaxSolver implements ISolver {
             if (board.isMovePossibleInDirection(dir))
                 possibleDirections.push(dir);
         }
+        console.log(possibleDirections);
         if (possibleDirections.length < 1)
             throw Error("there is not longer a move possibles");
 

@@ -124,10 +124,10 @@ export class GameComp extends Component<GameProps, GameCompState> {
     render() {
         if ((this.state.gameState === GameState.GAME_READY || this.state.gameState === GameState.GAME_RUNNING)
             && !this.state.game.humanPlayer) {
-            //this.state.game.performAiMove().then(performable => {
-            //    if (performable)
-            //        this.updateState(this.state.game);
-            //});
+            this.state.game.performAiMove().then(performable => {
+                if (performable)
+                    this.updateState(this.state.game);
+            });
         }
 
         return <div className="max-w-lg mx-auto mt-20 px-8 flex flex-col min-h-screen">

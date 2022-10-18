@@ -82,12 +82,9 @@ export class Game {
             throw Error("mode human player is set or solver is null or the delay is undefined, please use user input");
 
         let nextDirection = this._solver.getNextMove(this._board);
-        console.log("next direction: " + nextDirection);
 
         await delaySeconds(this._delayInSeconds);
-
-        let performable = this.performMove(nextDirection);
-        return performable;
+        return this.performMove(nextDirection);
     }
 
     public copy(): Game {
