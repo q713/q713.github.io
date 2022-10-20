@@ -14,7 +14,9 @@ type GameCompState = {
     game: Game,
     board: Board,
     points: number,
-    gameState: GameState
+    gameState: GameState,
+    bestScore: number,
+    reachedWin: boolean
 };
 
 export class GameComp extends Component<GameProps, GameCompState> {
@@ -27,7 +29,9 @@ export class GameComp extends Component<GameProps, GameCompState> {
             game: g,
             board: g.board,
             points: g.points,
-            gameState: GameState.GAME_READY
+            gameState: GameState.GAME_READY,
+            bestScore: 0,
+            reachedWin: false
         }
     }
 
@@ -56,21 +60,27 @@ export class GameComp extends Component<GameProps, GameCompState> {
         let b = g.board;
         let isGameOver = g.isGameOver();
         let isGameWon = g.isGameWon();
+        let reached = this.state.reachedWin;
 
         let state: GameState | undefined = undefined;
         if (isGameOver) {
             state = GameState.GAME_OVER;
-        } else if (isGameWon) {
+        } else if (isGameWon && !reached) {
             state = GameState.GAME_WON;
+            reached = true;
         } else {
             state = GameState.GAME_RUNNING;
         }
+
+        let best = this.state.bestScore < p ? p : this.state.bestScore;
 
         this.setState({
             game: g,
             board: b,
             points: p,
-            gameState: state
+            gameState: state,
+            bestScore: best,
+            reachedWin: reached
         });
     }
 
@@ -127,9 +137,8 @@ export class GameComp extends Component<GameProps, GameCompState> {
             window.addEventListener("keydown", this.handleKeyPress.bind(this));
         }
 
-        if (this.shouldPerformAiMove() && this.state.gameState == GameState.GAME_READY) {
+        if (this.shouldPerformAiMove() && this.state.gameState === GameState.GAME_READY) {
             this.makeAIMove();
-            console.log("ksjdfgjksdflsbdflb");
         }
     }
 
@@ -153,7 +162,13 @@ export class GameComp extends Component<GameProps, GameCompState> {
                 </div>
             </div>
 
+
             <div className="flex mb-4">
+                <div className="ml-4 relative rounded-lg text-center">
+                    <div className="text-xs font-bold uppercase">Best</div>
+                    <div className="font-bold">{this.state.bestScore}</div>
+                </div>
+
                 <div
                     className="ml-auto mr-4 relative px-3 py-1 rounded-lg text-center">
                     <div className="text-xs font-bold uppercase">Points</div>
@@ -165,7 +180,7 @@ export class GameComp extends Component<GameProps, GameCompState> {
                 <BoardComp board={this.state.game.board}/>
             </div>
 
-            <div className="flex mb-4">
+            <div className="flex mb-4 pt-4">
                 <NavLink to="/" className="text-xs font-bold uppercase rounded-lg bg-stone-900 text-white px-5 py-2.5
                     hover:bg-stone-800 ml-4">
                     Back
@@ -174,6 +189,10 @@ export class GameComp extends Component<GameProps, GameCompState> {
                     px-5 py-2.5 mr-4 hover:bg-stone-800" onClick={this.startNewGame.bind(this)}>
                     Restart
                 </button>
+            </div>
+
+            <div className="flex mb-4 pt-4">
+                <p className="text-stone-400 ml-auto mr-4 py-2.5"> Based on 2048 by <a className="font-bold" href="http://gabrielecirulli.github.io/2048">Gabriele Cirulli</a>.</p>
             </div>
 
             <GameEnded gameState={this.state.gameState} points={this.state.points} closeModal={

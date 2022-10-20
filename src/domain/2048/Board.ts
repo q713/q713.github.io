@@ -85,7 +85,7 @@ export class Board {
         this.addRandomPiece();
     }
 
-    private getColOrRows(cols: Boolean): Array<Array<Tile>> {
+    public getColOrRows(cols: Boolean): Array<Array<Tile>> {
         let colsOrRows = [];
         for (let a = 0; a < this.width; a++) {
             let colOrRow = [];

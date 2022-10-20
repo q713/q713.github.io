@@ -1,5 +1,6 @@
 import {Board} from './Board';
 import {MoveDirection} from "../Constants";
+import {Tile} from './Tile';
 
 export interface ISolver {
     getNextMove(board: Board): MoveDirection;
@@ -16,39 +17,74 @@ export class ExpectimaxSolver implements ISolver {
     }
 
     private fitness(board: Board): number {
-        let largestPieceInCorner = false;
+        if (!board.isMovePossible())
+            return Number.MIN_VALUE; 
+
+        // is the largest piece within a corner
         let largestPiece = board.largestPiece();
+        let largestPieceInCorner = false;
+        let largestPieceOnBorder = false;
         let goodLargestPiecePosiitons = [[0, 0], [0, board.width - 1], [board.width - 1, 0], [board.width - 1, board.width - 1]];
         goodLargestPiecePosiitons.forEach((largestPos) => {
             if (largestPos[0] === largestPiece._yPos && largestPos[1] === largestPiece._yPos) {
                 largestPieceInCorner = true;
             }
         })
+        if (largestPieceInCorner || largestPiece._xPos === 0 || largestPiece._yPos === 0 
+            || largestPiece._xPos === board.width-1 || largestPiece._yPos === board.width-1) 
+            largestPieceOnBorder = true;
 
-        let akkuTileValues = 0;
-        let distance = 0.0;
-        let soroundingTiles = [[-1, -1], [1, 1], [-1, 1], [1, -1]];
-        board.board.forEach((row) => {
-            row.forEach(tile => {
-                akkuTileValues += tile._value;
-                let tXpos = tile._xPos;
-                let tYpos = tile._yPos;
-                soroundingTiles.forEach(stp => {
-                    let sXpos = tXpos + stp[0];
-                    let sYpos = tYpos + stp[1];
-                    if (sXpos >= 0 && sXpos < board.width && sYpos >= 0 && sYpos < board.width) {
-                        let souroundingTile = board.board[sYpos][sXpos];
-                        distance += Math.abs(tile._value - souroundingTile._value);
+        // calculate monotonicity on the board
+        let scoreRowOrCol = function (colOrRow: Array<Tile>): [number, number] {
+            let incrementScore = 0;
+            let decrementScore = 0;
+            for (let index = 0; index < colOrRow.length; index++) {
+                let tileA = colOrRow[index];
+                incrementScore += tileA._value;
+                if (index === 0) {
+                    decrementScore += tileA._value;
+                    continue;
+                }
+                let tileB = colOrRow[index-1];
+                if (tileA._value <= tileB._value) {
+                    decrementScore += tileA._value;
+                    if (tileA._value < tileB._value) {
+                        incrementScore -= tileA._value;
                     }
-                });
-            });
+                }
+            }
+            return [incrementScore, decrementScore];
+        }
+        let distance = 0.0;
+        let cols = board.getColOrRows(true);
+        cols.forEach(col => {
+            let [incrementScore, decrementScore] = scoreRowOrCol(col);
+            distance += Math.max(incrementScore, decrementScore);
+        });
+        let rows = board.getColOrRows(false);
+        rows.forEach(row => {
+            let [incrementScore, decrementScore] = scoreRowOrCol(row);
+            distance += Math.max(incrementScore, decrementScore);
         });
 
-        let score = board.largestPieceValue() + akkuTileValues + distance + board.getFreePositions().length * 10;
-        if (largestPieceInCorner) {
-            score += akkuTileValues;
-        }
+        // accumulate the tile values
+        let gameTileAkku = 0.0;
+        board.board.forEach(row => row.forEach(tile => {gameTileAkku += tile._value;}));
 
+        let score = 0.0;
+        let freeTileWeight = largestPiece._value >= 1024 ? Math.log2(largestPiece._value) : 17;
+        score += freeTileWeight * board.getFreePositions().length;
+        if (largestPieceInCorner) {
+            score += 3*distance;
+        } else if (largestPieceOnBorder) {
+            score += 2*distance;
+        } else {
+            score += distance;
+        }/*
+        score += largestPiece._value;
+        score += gameTileAkku;
+        */
+        //score += distance;
         return score;
     }
 
