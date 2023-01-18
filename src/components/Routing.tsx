@@ -10,6 +10,7 @@ export const Routing = (): JSX.Element => {
             location.state === null ? true : (typeof location.state.humanPlayer === 'boolean'
                 ? location.state.humanPlayer : true)
         }/>}/>
+        <Route path="/SimbricksRepo" element={<Navigate to="https://github.com/simbricks" replace/>}/>
         <Route path="*" element={<Navigate to="/" replace/>}/>
     </Routes>
 }
