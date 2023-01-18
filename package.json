@@ -2,7 +2,7 @@
   "name": "personal-site",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://q713.github.io/jgoergen",
+  "homepage": "http://q713.github.io",
   "dependencies": {
     "@headlessui/react": "^1.7.3",
     "@react-spring/web": "^9.6.1",
