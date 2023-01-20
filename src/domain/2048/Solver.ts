@@ -1,6 +1,5 @@
-import {Board} from './Board';
-import {MoveDirection} from "../Constants";
-import {Tile} from './Tile';
+import { Board } from './Board';
+import { MoveDirection } from "../Constants";
 
 export interface ISolver {
     getNextMove(board: Board): MoveDirection;
@@ -16,76 +15,44 @@ export class ExpectimaxSolver implements ISolver {
         this._possibleMoveDirections = [MoveDirection.UP, MoveDirection.DOWN, MoveDirection.LEFT, MoveDirection.RIGHT];
     }
 
+    private snake_weights?: Array<Array<number>> = undefined;
+    private compute_snake_weights(board_width: number) {
+        if (this.snake_weights !== undefined) {
+            return;
+        }
+
+        let rows = new Array(board_width);
+        
+        let weight = -board_width;
+        for (let r = 0; r < board_width; r++) {
+            let col = new Array(board_width);
+            for (let c = 0; c < board_width; c++) {
+                col[c] = weight;
+                weight += board_width / 2;
+            }
+            rows[r] = col;
+        }
+
+        this.snake_weights = rows;
+    }
+
     private fitness(board: Board): number {
         if (!board.isMovePossible())
-            return Number.MIN_VALUE; 
+            return Number.MIN_VALUE;
 
-        // is the largest piece within a corner
-        let largestPiece = board.largestPiece();
-        let largestPieceInCorner = false;
-        let largestPieceOnBorder = false;
-        let goodLargestPiecePosiitons = [[0, 0], [0, board.width - 1], [board.width - 1, 0], [board.width - 1, board.width - 1]];
-        goodLargestPiecePosiitons.forEach((largestPos) => {
-            if (largestPos[0] === largestPiece._yPos && largestPos[1] === largestPiece._yPos) {
-                largestPieceInCorner = true;
-            }
-        })
-        if (largestPieceInCorner || largestPiece._xPos === 0 || largestPiece._yPos === 0 
-            || largestPiece._xPos === board.width-1 || largestPiece._yPos === board.width-1) 
-            largestPieceOnBorder = true;
+        this.compute_snake_weights(board.width);
 
-        // calculate monotonicity on the board
-        let scoreRowOrCol = function (colOrRow: Array<Tile>): [number, number] {
-            let incrementScore = 0;
-            let decrementScore = 0;
-            for (let index = 0; index < colOrRow.length; index++) {
-                let tileA = colOrRow[index];
-                incrementScore += tileA._value;
-                if (index === 0) {
-                    decrementScore += tileA._value;
-                    continue;
-                }
-                let tileB = colOrRow[index-1];
-                if (tileA._value <= tileB._value) {
-                    decrementScore += tileA._value;
-                    if (tileA._value < tileB._value) {
-                        incrementScore -= tileA._value;
-                    }
-                }
+        let fitness = 0;
+        for (let row = 0; row < board.width; row++) {
+            for (let col = 0; col < board.width; col++) {
+                fitness += this.snake_weights![row][col] * board.board[row][col]._value;
             }
-            return [incrementScore, decrementScore];
         }
-        let distance = 0.0;
-        let cols = board.getColOrRows(true);
-        cols.forEach(col => {
-            let [incrementScore, decrementScore] = scoreRowOrCol(col);
-            distance += Math.max(incrementScore, decrementScore);
-        });
-        let rows = board.getColOrRows(false);
-        rows.forEach(row => {
-            let [incrementScore, decrementScore] = scoreRowOrCol(row);
-            distance += Math.max(incrementScore, decrementScore);
-        });
 
-        // accumulate the tile values
-        let gameTileAkku = 0.0;
-        board.board.forEach(row => row.forEach(tile => {gameTileAkku += tile._value;}));
+        let amount_free = board.getFreePositions().length;
+        fitness += amount_free * amount_free * 2;
 
-        let score = 0.0;
-        let freeTileWeight = largestPiece._value >= 1024 ? Math.log2(largestPiece._value) : 17;
-        score += freeTileWeight * board.getFreePositions().length;
-        if (largestPieceInCorner) {
-            score += 3*distance;
-        } else if (largestPieceOnBorder) {
-            score += 2*distance;
-        } else {
-            score += distance;
-        }/*
-        score += largestPiece._value;
-        score += gameTileAkku;
-        */
-        //score += distance;
-        return score;
+        return fitness;
     }
 
     private getPossibleDirections(board: Board): Array<MoveDirection> {
