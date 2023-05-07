@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/jgoergen/static/css/main.0f547d97.css",
-    "main.js": "/jgoergen/static/js/main.99bec608.js",
+    "main.js": "/jgoergen/static/js/main.0b0320a2.js",
     "static/js/787.3ba5e41c.chunk.js": "/jgoergen/static/js/787.3ba5e41c.chunk.js",
     "static/media/Camunda_Logo_Black.png": "/jgoergen/static/media/Camunda_Logo_Black.be7f95545683acd33dd1.png",
     "static/media/Java-Logo.png": "/jgoergen/static/media/Java-Logo.6c1a3b5f7e2d535bff5b.png",
@@ -15,11 +15,11 @@
     "index.html": "/jgoergen/index.html",
     "static/media/React-icon.svg": "/jgoergen/static/media/React-icon.928f956d9c8ebcffb98a8e917154a81a.svg",
     "main.0f547d97.css.map": "/jgoergen/static/css/main.0f547d97.css.map",
-    "main.99bec608.js.map": "/jgoergen/static/js/main.99bec608.js.map",
+    "main.0b0320a2.js.map": "/jgoergen/static/js/main.0b0320a2.js.map",
     "787.3ba5e41c.chunk.js.map": "/jgoergen/static/js/787.3ba5e41c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.0f547d97.css",
-    "static/js/main.99bec608.js"
+    "static/js/main.0b0320a2.js"
   ]
 }
