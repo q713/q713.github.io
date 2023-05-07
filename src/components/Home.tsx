@@ -13,7 +13,7 @@ export const Home = () => {
                 <p>Hello I'm Jakob. Im a german computer science and working student.</p>
                 <p>Currently I'm working on my masters thesis at the <a className="font-bold" href="https://www.uni-saarland.de/start.html">Universität des Saarlandes</a> were I'm advised by</p>
                 <p><a className="font-bold" href="https://people.mpi-sws.org/~antoinek/index.html">Antoine Kaufmann</a>.</p>
-                <p>Besides studying I'm a working student at <a className="font-bold" href="https://www.inexio.net/">inexio</a> in the sofwtare development department.</p>
+                <p>Besides studying I'm a working student at <a className="font-bold" href="https://www.consistec.de/">Consistec Gmbh</a> in the sofwtare development department.</p>
 
                 <p className="mt-10">Below you can see some of my projects.</p>
 
