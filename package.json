@@ -2,7 +2,6 @@
   "name": "personal-site",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://q713.github.io/",
   "dependencies": {
     "@headlessui/react": "^1.7.3",
     "@react-spring/web": "^9.6.1",
@@ -24,6 +23,7 @@
     "start": "react-scripts start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
+    "pages-help": "gh-pages --help",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
