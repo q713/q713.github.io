@@ -1,25 +1,28 @@
 {
   "files": {
-    "main.css": "/jgoergen/static/css/main.0f547d97.css",
-    "main.js": "/jgoergen/static/js/main.0b0320a2.js",
-    "static/js/787.3ba5e41c.chunk.js": "/jgoergen/static/js/787.3ba5e41c.chunk.js",
-    "static/media/Camunda_Logo_Black.png": "/jgoergen/static/media/Camunda_Logo_Black.be7f95545683acd33dd1.png",
-    "static/media/Java-Logo.png": "/jgoergen/static/media/Java-Logo.6c1a3b5f7e2d535bff5b.png",
-    "static/media/PHP-logo.png": "/jgoergen/static/media/PHP-logo.53c03f24e5fab697efdf.png",
-    "static/media/The_C_Programming_Language_logo.svg.png": "/jgoergen/static/media/The_C_Programming_Language_logo.svg.c78045178fd507b771f6.png",
-    "static/media/simbricks-logo.png": "/jgoergen/static/media/simbricks-logo.70c1b0d12c5106dde586.png",
-    "static/media/2048.png": "/jgoergen/static/media/2048.06d6afc5e175eda0fad0.png",
-    "static/media/Spring_Framework_Logo_2018.svg": "/jgoergen/static/media/Spring_Framework_Logo_2018.8cf67a23ab817a102df81902e73e890f.svg",
-    "static/media/TypeScript_Logo.svg": "/jgoergen/static/media/TypeScript_Logo.807aa2ebc3d2eb2089585fb52488583b.svg",
-    "static/media/ISO_C++_Logo.svg": "/jgoergen/static/media/ISO_C++_Logo.2441702dffa95ca3c92c20816e386640.svg",
-    "index.html": "/jgoergen/index.html",
-    "static/media/React-icon.svg": "/jgoergen/static/media/React-icon.928f956d9c8ebcffb98a8e917154a81a.svg",
-    "main.0f547d97.css.map": "/jgoergen/static/css/main.0f547d97.css.map",
-    "main.0b0320a2.js.map": "/jgoergen/static/js/main.0b0320a2.js.map",
-    "787.3ba5e41c.chunk.js.map": "/jgoergen/static/js/787.3ba5e41c.chunk.js.map"
+    "main.css": "/static/css/main.a991b04c.css",
+    "main.js": "/static/js/main.4432f3f0.js",
+    "static/js/787.3ba5e41c.chunk.js": "/static/js/787.3ba5e41c.chunk.js",
+    "static/media/Camunda_Logo_Black.png": "/static/media/Camunda_Logo_Black.be7f95545683acd33dd1.png",
+    "static/media/columbo.png": "/static/media/columbo.db4a6e5a644ada9315d9.png",
+    "static/media/Java-Logo.png": "/static/media/Java-Logo.6c1a3b5f7e2d535bff5b.png",
+    "static/media/PHP-logo.png": "/static/media/PHP-logo.53c03f24e5fab697efdf.png",
+    "static/media/The_C_Programming_Language_logo.svg.png": "/static/media/The_C_Programming_Language_logo.svg.c78045178fd507b771f6.png",
+    "static/media/snail-example.png": "/static/media/snail-example.b2c9838e58d7df9652c1.png",
+    "static/media/simbricks-logo.png": "/static/media/simbricks-logo.70c1b0d12c5106dde586.png",
+    "static/media/2048.png": "/static/media/2048.06d6afc5e175eda0fad0.png",
+    "static/media/Spring_Framework_Logo_2018.svg": "/static/media/Spring_Framework_Logo_2018.8cf67a23ab817a102df81902e73e890f.svg",
+    "static/media/TypeScript_Logo.svg": "/static/media/TypeScript_Logo.807aa2ebc3d2eb2089585fb52488583b.svg",
+    "static/media/Go-Logo_Blue.svg": "/static/media/Go-Logo_Blue.a7ec2a5cabbfaa86d4ab2049185ce4d0.svg",
+    "static/media/ISO_C++_Logo.svg": "/static/media/ISO_C++_Logo.2441702dffa95ca3c92c20816e386640.svg",
+    "index.html": "/index.html",
+    "static/media/React-icon.svg": "/static/media/React-icon.928f956d9c8ebcffb98a8e917154a81a.svg",
+    "main.a991b04c.css.map": "/static/css/main.a991b04c.css.map",
+    "main.4432f3f0.js.map": "/static/js/main.4432f3f0.js.map",
+    "787.3ba5e41c.chunk.js.map": "/static/js/787.3ba5e41c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0f547d97.css",
-    "static/js/main.0b0320a2.js"
+    "static/css/main.a991b04c.css",
+    "static/js/main.4432f3f0.js"
   ]
 }
