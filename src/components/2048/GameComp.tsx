@@ -16,7 +16,8 @@ type GameCompState = {
     points: number,
     gameState: GameState,
     bestScore: number,
-    reachedWin: boolean
+    reachedWin: boolean,
+    humanPlayer: boolean
 };
 
 export class GameComp extends Component<GameProps, GameCompState> {
@@ -31,8 +32,16 @@ export class GameComp extends Component<GameProps, GameCompState> {
             points: g.points,
             gameState: GameState.GAME_READY,
             bestScore: 0,
-            reachedWin: false
+            reachedWin: false,
+            humanPlayer: props.humanPlayer
         }
+    }
+
+    private switchPlayers() {
+        let newPlayer = !this.state.humanPlayer;
+        let g = newPlayer ? Game.createHumanGame() : Game.createAiGame();
+        g.initGame();
+        this.updateState(g, newPlayer);
     }
 
     private closeGameOver() {
@@ -52,10 +61,10 @@ export class GameComp extends Component<GameProps, GameCompState> {
     private startNewGame() {
         let g = this.state.game.humanPlayer ? Game.createHumanGame() : Game.createAiGame();
         g.initGame();
-        this.updateState(g);
+        this.updateState(g, this.state.game.humanPlayer);
     }
 
-    private updateState(g: Game) {
+    private updateState(g: Game, hP: boolean) {
         let p = g.points;
         let b = g.board;
         let isGameOver = g.isGameOver();
@@ -80,7 +89,8 @@ export class GameComp extends Component<GameProps, GameCompState> {
             points: p,
             gameState: state,
             bestScore: best,
-            reachedWin: reached
+            reachedWin: reached,
+            humanPlayer: hP
         });
     }
 
@@ -113,7 +123,7 @@ export class GameComp extends Component<GameProps, GameCompState> {
         }
         let performable = this.state.game.performMove(direction!);
         if (performable) {
-            this.updateState(this.state.game);
+            this.updateState(this.state.game, this.state.game.humanPlayer);
         }
     }
 
@@ -125,10 +135,10 @@ export class GameComp extends Component<GameProps, GameCompState> {
         try {
             this.state.game.performAiMove().then(performable => {
                 if (performable)
-                    this.updateState(this.state.game);
+                    this.updateState(this.state.game, this.state.game.humanPlayer);
             });
         } catch (e) {
-           this.updateState(this.state.game);
+           this.updateState(this.state.game, this.state.game.humanPlayer);
         }
     }
 
@@ -185,6 +195,10 @@ export class GameComp extends Component<GameProps, GameCompState> {
                     hover:bg-stone-800 ml-4">
                     Back
                 </NavLink>
+                <button className="text-xs font-bold uppercase rounded-lg bg-stone-900 text-white px-5 py-2.5
+                    hover:bg-stone-800 ml-4" onClick={this.switchPlayers.bind(this)}>
+                    {this.state.humanPlayer ? "Switch to Ai" : "Switch to Human"}
+                </button>
                 <button className="text-xs font-bold uppercase rounded-lg bg-stone-900 text-white ml-auto
                     px-5 py-2.5 mr-4 hover:bg-stone-800" onClick={this.startNewGame.bind(this)}>
                     Restart

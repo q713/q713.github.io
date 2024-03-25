@@ -29,7 +29,10 @@ export const ProjectCard = (props: { children?: React.ReactNode }): JSX.Element 
         [shakeYStart, shakeYEnd, shakeYStart, shakeYEnd, shakeYStart, shakeYEnd, shakeYStart, shakeYEnd],
     );
 
-    return (<animated.div onMouseEnter={handleMouseEnter} style={{ x: xInterpolate, y: yInterpolate }} className="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-4xl p-10">
+    // return (<animated.div onMouseEnter={handleMouseEnter} style={{ x: xInterpolate, y: yInterpolate }} className="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-4xl p-10">
+    //     {props.children}
+    // </animated.div>);
+    return (<div className="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-4xl p-10">
         {props.children}
-    </animated.div>);
+    </div>);
 }
