@@ -35,7 +35,7 @@ export class Game {
         let board = Board.createBoard(width, chanceTwo);
         let maxSearchDepth = 5;
         let solver = new ExpectimaxSolver(maxSearchDepth);
-        let delayInSeconds = 0.2;
+        let delayInSeconds = 0.005;
         return new Game(4, chanceTwo, false, board, solver, delayInSeconds);
     }
 
