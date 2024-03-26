@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.a991b04c.css",
-    "main.js": "/static/js/main.9a195fb4.js",
+    "main.css": "/static/css/main.4536de18.css",
+    "main.js": "/static/js/main.8172f9ba.js",
     "static/js/787.3ba5e41c.chunk.js": "/static/js/787.3ba5e41c.chunk.js",
     "static/media/Camunda_Logo_Black.png": "/static/media/Camunda_Logo_Black.be7f95545683acd33dd1.png",
     "static/media/columbo.png": "/static/media/columbo.db4a6e5a644ada9315d9.png",
@@ -17,12 +17,12 @@
     "static/media/ISO_C++_Logo.svg": "/static/media/ISO_C++_Logo.2441702dffa95ca3c92c20816e386640.svg",
     "index.html": "/index.html",
     "static/media/React-icon.svg": "/static/media/React-icon.928f956d9c8ebcffb98a8e917154a81a.svg",
-    "main.a991b04c.css.map": "/static/css/main.a991b04c.css.map",
-    "main.9a195fb4.js.map": "/static/js/main.9a195fb4.js.map",
+    "main.4536de18.css.map": "/static/css/main.4536de18.css.map",
+    "main.8172f9ba.js.map": "/static/js/main.8172f9ba.js.map",
     "787.3ba5e41c.chunk.js.map": "/static/js/787.3ba5e41c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a991b04c.css",
-    "static/js/main.9a195fb4.js"
+    "static/css/main.4536de18.css",
+    "static/js/main.8172f9ba.js"
   ]
 }
