@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.4536de18.css",
-    "main.js": "/static/js/main.8172f9ba.js",
+    "main.js": "/static/js/main.aae78cab.js",
     "static/js/787.3ba5e41c.chunk.js": "/static/js/787.3ba5e41c.chunk.js",
     "static/media/Camunda_Logo_Black.png": "/static/media/Camunda_Logo_Black.be7f95545683acd33dd1.png",
     "static/media/columbo.png": "/static/media/columbo.db4a6e5a644ada9315d9.png",
@@ -18,11 +18,11 @@
     "index.html": "/index.html",
     "static/media/React-icon.svg": "/static/media/React-icon.928f956d9c8ebcffb98a8e917154a81a.svg",
     "main.4536de18.css.map": "/static/css/main.4536de18.css.map",
-    "main.8172f9ba.js.map": "/static/js/main.8172f9ba.js.map",
+    "main.aae78cab.js.map": "/static/js/main.aae78cab.js.map",
     "787.3ba5e41c.chunk.js.map": "/static/js/787.3ba5e41c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4536de18.css",
-    "static/js/main.8172f9ba.js"
+    "static/js/main.aae78cab.js"
   ]
 }
