@@ -3,7 +3,6 @@ import twnetyfourthyeight from "../images/2048.png";
 import simbricks from "../images/simbricks-logo.png";
 import snail from "../images/snail-example.png"
 import columbo from "../images/columbo.png"
-import { ProjectCard } from "./ProjectCard";
 import { Skills } from "./Skills";
 
 export const Home = () => {
