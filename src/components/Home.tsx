@@ -26,7 +26,7 @@ export const Home = () => {
               Institute for Software Systems (MPI SWS)</a> in the <a className="font-bold" href="https://os.mpi-sws.org/">Operating Systems Group</a> of
               Antoine Kaufmann under whose supervision I also successfully completed my Master's degree. My Thesis revolved
               around <a className="font-bold" href="https://www.simbricks.io/projects/columbo.html">Columbo</a>, that aims to add library support
-              to <a className="font-bold" href="https://www.simbricks.github.io">SimBricks</a> for creating Low-Level End-to-End System-Traces.</p>
+              to <a className="font-bold" href="https://www.simbricks.io">SimBricks</a> for creating Low-Level End-to-End System-Traces.</p>
           </div>
         </div>
         <p>I'm generally interested in Operating-, Database- and Distributed-Systems as well as simulation and virtual prototyping.
