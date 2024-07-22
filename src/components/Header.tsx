@@ -5,7 +5,7 @@ export const Header = (): JSX.Element => {
         <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded fixed w-full z-20 top-0 left-0 border-b">
             <div className="container flex flex-wrap justify-between items-center mx-auto">
                 <div className="flex items-center">
-                    <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+                    <span className="self-center text-xl font-semibold whitespace-nowrap">
                         Jakob Görgen
                     </span>
                 </div>
