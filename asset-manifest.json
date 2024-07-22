@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.6e06bd5b.css",
-    "main.js": "/static/js/main.6e3116ea.js",
+    "main.js": "/static/js/main.3d910f8d.js",
     "static/js/787.3ba5e41c.chunk.js": "/static/js/787.3ba5e41c.chunk.js",
     "static/media/jakob.png": "/static/media/jakob.aad0679b303f6db50a82.png",
     "static/media/Camunda_Logo_Black.png": "/static/media/Camunda_Logo_Black.be7f95545683acd33dd1.png",
@@ -19,11 +19,11 @@
     "index.html": "/index.html",
     "static/media/React-icon.svg": "/static/media/React-icon.928f956d9c8ebcffb98a8e917154a81a.svg",
     "main.6e06bd5b.css.map": "/static/css/main.6e06bd5b.css.map",
-    "main.6e3116ea.js.map": "/static/js/main.6e3116ea.js.map",
+    "main.3d910f8d.js.map": "/static/js/main.3d910f8d.js.map",
     "787.3ba5e41c.chunk.js.map": "/static/js/787.3ba5e41c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6e06bd5b.css",
-    "static/js/main.6e3116ea.js"
+    "static/js/main.3d910f8d.js"
   ]
 }
