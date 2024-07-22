@@ -3,6 +3,7 @@ import twnetyfourthyeight from "../images/2048.png";
 import simbricks from "../images/simbricks-logo.png";
 import snail from "../images/snail-example.png"
 import columbo from "../images/columbo.png"
+import jakob from "../images/jakob.png"
 import { Skills } from "./Skills";
 
 export const Home = () => {
@@ -13,18 +14,26 @@ export const Home = () => {
     return (
         <div className="max-w-4xl mx-auto px-10 flex flex-col divide-y">
             <div className="flex py-10 flex-col pb-20 text-left gap-4">
-                <h1 className="text-4xl text-bold text-stone-900 mt-20 mb-4">About Me</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-2 mt-20 mb-4">
+              <div>
+                <img className="inline-block rounded-full ring-2 ring-white" src={jakob} alt=""/>
+              </div>
+
+              <div>
+                <h1 className="text-4xl text-bold text-stone-900">About Me</h1>
                 <p>Hi, I'm Jakob, a German software engineer.</p>
                 <p>I am currently working as a research engineer at the <a className="font-bold" href="https://www.mpi-sws.org/">Max Planck 
                   Institute for Software Systems (MPI SWS)</a> in the <a className="font-bold" href="https://os.mpi-sws.org/">Operating Systems Group</a> of 
                   Antoine Kaufmann under whose supervision I also successfully completed my Master's degree. My Thesis revolved 
                   around <a className="font-bold" href="https://www.simbricks.io/projects/columbo.html">Columbo</a>, that aims to add library support 
                   to <a className="font-bold" href="https://www.simbricks.github.io">SimBricks</a> for creating Low-Level End-to-End System-Traces.</p>
-                <p>I'm generally interested in Operating-, Database- and Distributed-Systems as well as simulation and virtual prototyping. 
+              </div>
+            </div>
+              <p>I'm generally interested in Operating-, Database- and Distributed-Systems as well as simulation and virtual prototyping. 
                   I am particularly interested in understanding the behaviour of Distributed-Systems at run time across boundaries of the 
                   involved components using techniques like Distributed-Tracing.</p>
-                <p>Below you can see some of my projects.</p>
-                <p>You can find me on <a className="font-bold" href="https://github.com/q713">GitHub</a> or <a className="font-bold" href="https://www.linkedin.com/in/jakob-görgen-69340b2ab">LinkedIn</a>.</p>
+              <p>Below you can see some of my projects.</p>
+              <p>You can find me on <a className="font-bold" href="https://github.com/q713">GitHub</a> or <a className="font-bold" href="https://www.linkedin.com/in/jakob-görgen-69340b2ab">LinkedIn</a>.</p>
             </div>
 
             <div className="flex py-10 pb-20 flex-col items-start space-y-10">
