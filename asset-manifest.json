@@ -1,8 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.6e06bd5b.css",
-    "main.js": "/static/js/main.3d910f8d.js",
+    "main.css": "/static/css/main.cd303d12.css",
+    "main.js": "/static/js/main.89184a76.js",
     "static/js/787.3ba5e41c.chunk.js": "/static/js/787.3ba5e41c.chunk.js",
+    "static/media/columbo-thesis.pdf": "/static/media/columbo-thesis.d35cd407f62e40557d6c.pdf",
+    "static/media/columbo-vision-paper.pdf": "/static/media/columbo-vision-paper.5cddbb9670f8235dff1a.pdf",
     "static/media/jakob.png": "/static/media/jakob.aad0679b303f6db50a82.png",
     "static/media/Camunda_Logo_Black.png": "/static/media/Camunda_Logo_Black.be7f95545683acd33dd1.png",
     "static/media/columbo.png": "/static/media/columbo.db4a6e5a644ada9315d9.png",
@@ -18,12 +20,12 @@
     "static/media/ISO_C++_Logo.svg": "/static/media/ISO_C++_Logo.2441702dffa95ca3c92c20816e386640.svg",
     "index.html": "/index.html",
     "static/media/React-icon.svg": "/static/media/React-icon.928f956d9c8ebcffb98a8e917154a81a.svg",
-    "main.6e06bd5b.css.map": "/static/css/main.6e06bd5b.css.map",
-    "main.3d910f8d.js.map": "/static/js/main.3d910f8d.js.map",
+    "main.cd303d12.css.map": "/static/css/main.cd303d12.css.map",
+    "main.89184a76.js.map": "/static/js/main.89184a76.js.map",
     "787.3ba5e41c.chunk.js.map": "/static/js/787.3ba5e41c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6e06bd5b.css",
-    "static/js/main.3d910f8d.js"
+    "static/css/main.cd303d12.css",
+    "static/js/main.89184a76.js"
   ]
 }
