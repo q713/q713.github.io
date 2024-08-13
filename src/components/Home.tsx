@@ -5,6 +5,8 @@ import snail from "../images/snail-example.png"
 import columbo from "../images/columbo.png"
 import jakob from "../images/jakob.png"
 import { Skills } from "./Skills";
+import { Publications } from "./Publications"
+import { Heading } from "./Heading";
 
 export const Home = () => {
   function redirect(url: string) {
@@ -37,7 +39,7 @@ export const Home = () => {
       </div>
 
       <div className="flex py-10 pb-20 flex-col items-start space-y-10">
-        <h1 className="text-4xl text-bold text-stone-900 pt-10 pb-10">Projects</h1>
+        <Heading> Projects </Heading>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-2">
           <div onClick={() => redirect("https://www.simbricks.io/projects/columbo.html")} className=" bg-white/20 p-6 rounded-md shadow-md cursor-pointer border-2 border-gray-50 hover:border-black hover:border-2 transition-colors duration-300">
             <h2 className="text-xl font-semibold mb-4">Columbo</h2>
@@ -74,6 +76,8 @@ export const Home = () => {
           </NavLink>
         </div>
       </div>
+
+      <Publications />
 
       <Skills />
     </div>
